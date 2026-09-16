@@ -20,8 +20,6 @@ class Settings(BaseSettings):
 
     github_client_id: str | None = None
     github_client_secret: str | None = None
-    google_oauth_client_id: str | None = None
-    google_oauth_client_secret: str | None = None
 
 
 @lru_cache
