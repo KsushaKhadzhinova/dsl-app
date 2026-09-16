@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import NotationsList from '../src/components/NotationsList.jsx';
+import NotationsList from '../src/components/features/NotationsList.jsx';
 
 test('renders one list item per notation', () => {
   const notations = ['UML', 'BPMN', 'ERD'];

@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import Hero from '../src/components/Hero.jsx';
+import Hero from '../src/components/features/Hero.jsx';
 
 test('renders the given title as the page h1 and the subtitle text', () => {
   render(<Hero title="Заголовок" subtitle="Подзаголовок" />);

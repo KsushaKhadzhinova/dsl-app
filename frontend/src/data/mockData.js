@@ -33,6 +33,11 @@ export const features = [
     title: 'История версий',
     text: 'Git-подобное версионирование: коммиты, дифф между версиями, откат к прошлым состояниям.',
   },
+  {
+    id: 'notations',
+    title: 'Несколько нотаций',
+    text: 'UML, BPMN, ERD, сети Петри, IDEF0, IDEF3, DFD — одна и та же диаграмма разными языками описания.',
+  },
 ];
 
 export const notations = ['UML', 'BPMN', 'ERD', 'Сети Петри', 'IDEF0', 'IDEF3', 'DFD', 'Без нотации'];

@@ -1,4 +1,5 @@
-import { pluralizeRu } from '../utils/pluralizeRu.js';
+import Card from '../ui/Card.jsx';
+import { pluralizeRu } from '../../utils/pluralizeRu.js';
 
 function RepoStatsCard({ stars, forks, openIssues, updatedAt }) {
   return (
@@ -7,26 +8,26 @@ function RepoStatsCard({ stars, forks, openIssues, updatedAt }) {
         Проект вживую
       </h2>
       <dl className="repo-stats__grid">
-        <div className="repo-stats__item">
+        <Card className="repo-stats__item">
           <dt className="repo-stats__label">Звёзды</dt>
           <dd className="repo-stats__value">
             {stars} {pluralizeRu(stars, ['звезда', 'звезды', 'звёзд'])}
           </dd>
-        </div>
-        <div className="repo-stats__item">
+        </Card>
+        <Card className="repo-stats__item">
           <dt className="repo-stats__label">Форки</dt>
           <dd className="repo-stats__value">
             {forks} {pluralizeRu(forks, ['форк', 'форка', 'форков'])}
           </dd>
-        </div>
-        <div className="repo-stats__item">
+        </Card>
+        <Card className="repo-stats__item">
           <dt className="repo-stats__label">Открытые issues</dt>
           <dd className="repo-stats__value">{openIssues}</dd>
-        </div>
-        <div className="repo-stats__item">
+        </Card>
+        <Card className="repo-stats__item">
           <dt className="repo-stats__label">Последний коммит</dt>
           <dd className="repo-stats__value">{updatedAt}</dd>
-        </div>
+        </Card>
       </dl>
     </section>
   );

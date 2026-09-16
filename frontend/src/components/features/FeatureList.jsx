@@ -1,6 +1,6 @@
 import FeatureCard from './FeatureCard.jsx';
 
-function FeatureList({ features }) {
+function FeatureList({ features, onLearnMore }) {
   return (
     <section id="features" className="features" aria-labelledby="features-title">
       <h2 id="features-title" className="features__title">
@@ -8,7 +8,7 @@ function FeatureList({ features }) {
       </h2>
       <div className="features__grid">
         {features.map((feature) => (
-          <FeatureCard key={feature.id} title={feature.title} text={feature.text} />
+          <FeatureCard key={feature.id} title={feature.title} text={feature.text} onLearnMore={onLearnMore} />
         ))}
       </div>
     </section>

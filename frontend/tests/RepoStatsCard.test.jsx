@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import RepoStatsCard from '../src/components/RepoStatsCard.jsx';
+import RepoStatsCard from '../src/components/features/RepoStatsCard.jsx';
 
 test('renders all four stats passed as props, with pluralized nouns for stars/forks', () => {
   render(<RepoStatsCard stars={5} forks={2} openIssues={1} updatedAt="15.01.2026" />);

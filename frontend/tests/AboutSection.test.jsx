@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import AboutSection from '../src/components/AboutSection.jsx';
+import AboutSection from '../src/components/features/AboutSection.jsx';
 
 const organization = { name: 'DiagramCode', description: 'Описание проекта', url: 'https://example.com' };
 const author = {

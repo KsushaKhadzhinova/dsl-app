@@ -1,6 +1,5 @@
 import { render, screen } from '@testing-library/react';
-import '@testing-library/jest-dom';
-import Header from '../src/components/Header.jsx';
+import Header from '../src/components/layout/Header.jsx';
 
 const navItems = [
   { label: 'Возможности', href: '#features' },

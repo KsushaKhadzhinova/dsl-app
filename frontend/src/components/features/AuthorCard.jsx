@@ -1,4 +1,4 @@
-import { stripProtocol } from '../utils/stripProtocol.js';
+import { stripProtocol } from '../../utils/stripProtocol.js';
 
 function AuthorCard({ name, jobTitle, affiliation, sameAs }) {
   return (
