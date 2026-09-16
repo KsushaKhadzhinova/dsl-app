@@ -40,3 +40,4 @@ logs/
 # Personal report drafts (not part of the codebase)
 *.docx
 /REFERENCE_screenshots_from_other_report/
+/REPORT_screenshots_lab2/
