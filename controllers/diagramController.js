@@ -1,57 +1,33 @@
 const store = require("../models/diagramStore");
 
-function validatePayload(body) {
-  if (!body || typeof body.title !== "string" || body.title.trim() === "") {
-    return "title обязателен и должен быть непустой строкой";
-  }
-  if (!body || typeof body.notation !== "string" || body.notation.trim() === "") {
-    return "notation обязателен и должен быть непустой строкой";
-  }
-  return null;
+function index(req, res) {
+  res.render("index", { diagrams: store.findAll(), user: req.user });
 }
 
-function getAll(req, res) {
-  res.status(200).json(store.findAll());
-}
-
-function getById(req, res) {
+function showItem(req, res, next) {
   const id = Number(req.params.id);
   const diagram = store.findById(id);
   if (!diagram) {
-    return res.status(404).json({ error: "Диаграмма не найдена" });
+    return next();
   }
-  res.status(200).json(diagram);
+  res.render("item", { diagram, user: req.user });
 }
 
-function create(req, res) {
-  const validationError = validatePayload(req.body);
-  if (validationError) {
-    return res.status(400).json({ error: validationError });
-  }
-  const diagram = store.create(req.body);
-  res.status(201).json(diagram);
+function showAddForm(req, res) {
+  res.render("add", { error: null, values: { title: "", notation: "" }, user: req.user });
 }
 
-function update(req, res) {
-  const id = Number(req.params.id);
-  const validationError = validatePayload(req.body);
-  if (validationError) {
-    return res.status(400).json({ error: validationError });
+function submitAddForm(req, res) {
+  const { title, notation } = req.body;
+  if (!title || !notation) {
+    return res.status(400).render("add", {
+      error: "title и notation обязательны",
+      values: { title: title || "", notation: notation || "" },
+      user: req.user,
+    });
   }
-  const diagram = store.update(id, req.body);
-  if (!diagram) {
-    return res.status(404).json({ error: "Диаграмма не найдена" });
-  }
-  res.status(200).json(diagram);
+  store.create({ title, notation });
+  res.redirect("/");
 }
 
-function remove(req, res) {
-  const id = Number(req.params.id);
-  const removed = store.remove(id);
-  if (!removed) {
-    return res.status(404).json({ error: "Диаграмма не найдена" });
-  }
-  res.status(204).send();
-}
-
-module.exports = { getAll, getById, create, update, remove, validatePayload };
+module.exports = { index, showItem, showAddForm, submitAddForm };

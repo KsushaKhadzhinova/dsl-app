@@ -3,10 +3,9 @@ const controller = require("../controllers/diagramController");
 
 const router = express.Router();
 
-router.get("/", controller.getAll);
-router.get("/:id", controller.getById);
-router.post("/", controller.create);
-router.put("/:id", controller.update);
-router.delete("/:id", controller.remove);
+router.get("/", controller.index);
+router.get("/item/:id", controller.showItem);
+router.get("/add", controller.showAddForm);
+router.post("/add", controller.submitAddForm);
 
 module.exports = router;

@@ -1,0 +1,12 @@
+<%- include('partials/header') %>
+<h1>Диаграммы</h1>
+<a href="/add">Добавить диаграмму</a>
+<ul>
+  <% diagrams.forEach(function(diagram) { %>
+    <li><a href="/item/<%= diagram.id %>"><%= diagram.title %></a> — <%= diagram.notation %></li>
+  <% }); %>
+</ul>
+<% if (diagrams.length === 0) { %>
+  <p>Диаграмм пока нет.</p>
+<% } %>
+<%- include('partials/footer') %>

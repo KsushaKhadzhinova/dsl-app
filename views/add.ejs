@@ -1,0 +1,11 @@
+<%- include('partials/header') %>
+<h1>Добавить диаграмму</h1>
+<% if (error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
+<form method="post" action="/add">
+  <label>Название<input type="text" name="title" value="<%= values.title %>"></label>
+  <label>Нотация<input type="text" name="notation" value="<%= values.notation %>"></label>
+  <button type="submit">Сохранить</button>
+</form>
+<%- include('partials/footer') %>

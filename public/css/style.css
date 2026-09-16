@@ -1,0 +1,15 @@
+body {
+  font-family: system-ui, sans-serif;
+  margin: 0;
+  padding: 24px;
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 24px;
+}
+
+.error {
+  color: #c73a32;
+}

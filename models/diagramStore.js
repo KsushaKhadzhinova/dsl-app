@@ -26,20 +26,4 @@ function create({ title, notation, dslContent }) {
   return diagram;
 }
 
-function update(id, { title, notation, dslContent }) {
-  const diagram = findById(id);
-  if (!diagram) return null;
-  diagram.title = title;
-  diagram.notation = notation;
-  diagram.dslContent = dslContent || "";
-  return diagram;
-}
-
-function remove(id) {
-  const index = diagrams.findIndex((diagram) => diagram.id === id);
-  if (index === -1) return false;
-  diagrams.splice(index, 1);
-  return true;
-}
-
-module.exports = { reset, findAll, findById, create, update, remove };
+module.exports = { reset, findAll, findById, create };

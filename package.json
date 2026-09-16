@@ -1,7 +1,7 @@
 {
-  "name": "diagramcode-lab21",
+  "name": "diagramcode-pz21",
   "version": "1.0.0",
-  "description": "ITiVP Lab 1 - Node.js/Express server application",
+  "description": "ITiVP Practical 1 - Middleware and EJS templating",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",
@@ -9,6 +9,7 @@
     "test": "jest --coverage"
   },
   "dependencies": {
+    "ejs": "^3.1.10",
     "express": "^4.19.2"
   },
   "devDependencies": {
