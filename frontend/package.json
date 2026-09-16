@@ -4,12 +4,33 @@
   "description": "DiagramCode frontend (Part 1 labs progression: vanilla HTML/CSS/JS -> React in Lab 7)",
   "main": "index.html",
   "scripts": {
-    "dev": "nodemon --watch . --ext html,css,js --exec \"echo saved\""
+    "dev": "nodemon --watch . --ext html,css,js --exec \"echo saved\"",
+    "test": "jest --coverage"
   },
   "dependencies": {
     "lodash": "^4.17.21"
   },
   "devDependencies": {
-    "nodemon": "^3.1.4"
+    "nodemon": "^3.1.4",
+    "jest": "^29.7.0",
+    "jest-environment-jsdom": "^29.7.0",
+    "jsdom": "^24.1.1"
+  },
+  "jest": {
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "<rootDir>/tests/jest.setup.js"
+    ],
+    "collectCoverageFrom": [
+      "js/**/*.js"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "branches": 100,
+        "functions": 100,
+        "lines": 100,
+        "statements": 100
+      }
+    }
   }
 }

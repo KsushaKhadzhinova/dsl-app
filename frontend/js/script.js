@@ -1,13 +1,10 @@
 const THEME_STORAGE_KEY = 'dc-theme';
 
-function applyTheme(theme) {
+function applyTheme(theme, toggle) {
   document.documentElement.setAttribute('data-theme', theme);
-  const toggle = document.getElementById('theme-toggle');
-  if (toggle) {
-    const isLight = theme === 'light';
-    toggle.textContent = isLight ? 'Тёмная тема' : 'Светлая тема';
-    toggle.setAttribute('aria-pressed', String(isLight));
-  }
+  const isLight = theme === 'light';
+  toggle.textContent = isLight ? 'Тёмная тема' : 'Светлая тема';
+  toggle.setAttribute('aria-pressed', String(isLight));
 }
 
 function initThemeToggle() {
@@ -15,11 +12,11 @@ function initThemeToggle() {
   if (!toggle) return;
 
   const storedTheme = localStorage.getItem(THEME_STORAGE_KEY) || 'dark';
-  applyTheme(storedTheme);
+  applyTheme(storedTheme, toggle);
 
   toggle.addEventListener('click', () => {
     const nextTheme = document.documentElement.getAttribute('data-theme') === 'light' ? 'dark' : 'light';
-    applyTheme(nextTheme);
+    applyTheme(nextTheme, toggle);
     localStorage.setItem(THEME_STORAGE_KEY, nextTheme);
   });
 }

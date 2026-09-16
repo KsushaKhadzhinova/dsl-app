@@ -30,6 +30,13 @@
 
 Проверить после пуша через Google Rich Results Test (`https://search.google.com/test/rich-results`) — вставить URL страницы на GitHub Pages или сырой HTML.
 
+## Тесты
+
+Ретроактивно покрыто в рамках Lab 5 (когда в проект добавился Jest): `frontend/tests/markup.test.js`
+парсит реальный `index.html` через `jsdom` и проверяет семантические теги, иерархию заголовков,
+`alt` у всех изображений, skip-link и обе микроразметки Schema.org (Organization + Person).
+Запуск вместе со всеми фронтенд-тестами: `npm test` в `frontend/`.
+
 ## Что нужно сделать тебе лично
 
 Сделать скриншот прогона страницы через валидатор W3C (`https://validator.w3.org/#validate_by_upload`) и через Rich Results Test для отчёта.
