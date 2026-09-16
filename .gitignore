@@ -36,3 +36,6 @@ logs/
 # Local data
 *.db
 *.sqlite3
+
+# Personal report drafts (not part of the codebase)
+*.docx
