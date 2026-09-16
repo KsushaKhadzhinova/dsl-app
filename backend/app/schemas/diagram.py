@@ -13,8 +13,34 @@ class DiagramResponse(BaseModel):
     id: uuid.UUID
     title: str
     notation: str
+    parent_diagram_id: uuid.UUID | None = None
+    decomposed_node_id: str | None = None
     created_at: datetime
     updated_at: datetime
+
+    model_config = {"from_attributes": True}
+
+
+class DiagramDetailResponse(DiagramResponse):
+    current_dsl_content: str | None = None
+
+
+class DecompositionCreateRequest(BaseModel):
+    decomposed_node_id: str
+    title: str
+    notation: str
+
+
+class CollaboratorAddRequest(BaseModel):
+    identifier: str
+    role: str = "editor"
+
+
+class CollaboratorResponse(BaseModel):
+    id: uuid.UUID
+    user_id: uuid.UUID
+    role: str
+    created_at: datetime
 
     model_config = {"from_attributes": True}
 
