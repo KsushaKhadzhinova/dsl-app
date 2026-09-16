@@ -1,3 +1,5 @@
+import { pluralizeRu } from '../utils/pluralizeRu.js';
+
 function RepoStatsCard({ stars, forks, openIssues, updatedAt }) {
   return (
     <section className="repo-stats" aria-labelledby="repo-stats-title">
@@ -7,11 +9,15 @@ function RepoStatsCard({ stars, forks, openIssues, updatedAt }) {
       <dl className="repo-stats__grid">
         <div className="repo-stats__item">
           <dt className="repo-stats__label">Звёзды</dt>
-          <dd className="repo-stats__value">{stars}</dd>
+          <dd className="repo-stats__value">
+            {stars} {pluralizeRu(stars, ['звезда', 'звезды', 'звёзд'])}
+          </dd>
         </div>
         <div className="repo-stats__item">
           <dt className="repo-stats__label">Форки</dt>
-          <dd className="repo-stats__value">{forks}</dd>
+          <dd className="repo-stats__value">
+            {forks} {pluralizeRu(forks, ['форк', 'форка', 'форков'])}
+          </dd>
         </div>
         <div className="repo-stats__item">
           <dt className="repo-stats__label">Открытые issues</dt>

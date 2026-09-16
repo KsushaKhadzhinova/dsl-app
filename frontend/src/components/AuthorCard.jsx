@@ -1,3 +1,5 @@
+import { stripProtocol } from '../utils/stripProtocol.js';
+
 function AuthorCard({ name, jobTitle, affiliation, sameAs }) {
   return (
     <article
@@ -26,7 +28,7 @@ function AuthorCard({ name, jobTitle, affiliation, sameAs }) {
         <span itemProp="name">{affiliation}</span>
       </p>
       <a className="author__link" itemProp="sameAs" href={sameAs}>
-        {sameAs.replace('https://', '')}
+        {stripProtocol(sameAs)}
       </a>
     </article>
   );
