@@ -136,6 +136,29 @@
       </div>
     </section>
 
+    <section id="repo-stats" class="repo-stats" aria-labelledby="repo-stats-title">
+      <h2 id="repo-stats-title" class="repo-stats__title">Проект вживую</h2>
+      <p class="repo-stats__status" id="repo-stats-status">Загружаем данные с GitHub…</p>
+      <dl class="repo-stats__grid" id="repo-stats-grid" hidden>
+        <div class="repo-stats__item">
+          <dt class="repo-stats__label">Звёзды</dt>
+          <dd class="repo-stats__value" id="repo-stats-stars">—</dd>
+        </div>
+        <div class="repo-stats__item">
+          <dt class="repo-stats__label">Форки</dt>
+          <dd class="repo-stats__value" id="repo-stats-forks">—</dd>
+        </div>
+        <div class="repo-stats__item">
+          <dt class="repo-stats__label">Открытые issues</dt>
+          <dd class="repo-stats__value" id="repo-stats-issues">—</dd>
+        </div>
+        <div class="repo-stats__item">
+          <dt class="repo-stats__label">Последний коммит</dt>
+          <dd class="repo-stats__value" id="repo-stats-updated">—</dd>
+        </div>
+      </dl>
+    </section>
+
     <section id="about" class="about" aria-labelledby="about-title"
       itemscope itemtype="https://schema.org/Organization">
       <h2 id="about-title" class="about__title" itemprop="name">DiagramCode</h2>
@@ -168,5 +191,6 @@
   </footer>
 
   <script src="js/script.js"></script>
+  <script src="js/repoStats.js"></script>
 </body>
 </html>

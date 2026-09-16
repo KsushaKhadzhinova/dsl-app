@@ -292,6 +292,47 @@ img {
   margin: 0 0 calc(var(--spacing-unit) * 2);
 }
 
+.repo-stats {
+  padding: calc(var(--spacing-unit) * 3) 0;
+  border-top: 1px solid var(--color-border);
+}
+
+.repo-stats__title {
+  font-size: 1.4rem;
+  margin-bottom: calc(var(--spacing-unit) * 2);
+}
+
+.repo-stats__status {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+}
+
+.repo-stats__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: calc(var(--spacing-unit) * 2);
+  margin: 0;
+}
+
+.repo-stats__item {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  padding: calc(var(--spacing-unit) * 2);
+}
+
+.repo-stats__label {
+  color: var(--color-text-muted);
+  font-size: 0.8rem;
+  margin: 0 0 calc(var(--spacing-unit) / 2);
+}
+
+.repo-stats__value {
+  font-size: 1.2rem;
+  font-weight: 700;
+  margin: 0;
+}
+
 .about {
   padding: calc(var(--spacing-unit) * 3) 0;
   border-top: 1px solid var(--color-border);
@@ -367,6 +408,10 @@ img {
 
   .features__grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+
+  .repo-stats__grid {
+    grid-template-columns: repeat(4, 1fr);
   }
 
   .notations {
