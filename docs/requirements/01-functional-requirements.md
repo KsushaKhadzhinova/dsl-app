@@ -32,6 +32,7 @@
 | FR-NOT-04 | 1 | Система не должна выполнять рендер, если среди результатов валидации есть хотя бы одна ошибка уровня `error`; при этом предупреждения (`warning`) рендер не блокируют. | `backend/app/services/diagram_service.py::render` |
 | FR-NOT-05 | 2 | Система должна поддержкивать UML: **use case, sequence, activity, state machine**; IDEF3 (PFDD); DFD (с декомпозицией по уровням, аналогично IDEF0). | архитектура §5, «Волна 2» |
 | FR-NOT-06 | 1 | Система должна поддерживать UML **class diagram** и **IDEF0 (контекст + декомпозиция)** в объёме, достаточном для курсового среза. | архитектура §5, «Волна 1» |
+| FR-NOT-06a | 2 | Иерархическая декомпозиция (IDEF0/DFD) должна моделироваться как отдельная связанная `Diagram`-запись: поле `parent_diagram_id` (родитель) + `decomposed_node_id` (какой узел родителя раскрывает эта диаграмма), по аналогии с git submodule (решено, см. `00-overview.md` §5, п. 2). | `00-overview.md` §5, п. 2 |
 | FR-NOT-07 | 3 | Система должна поддерживать оставшиеся диаграммы UML (object, component, composite structure, deployment, package, profile, communication, interaction overview, timing) — все 13 канонических видов суммарно. | архитектура §5, «Волна 3» |
 | FR-NOT-08 | 3 | Система должна поддерживать **IDEF1X** как отдельную от ERD нотацию (со своим разделением уровней), **IDEF3 OSTN**, а также остальные комбинации ERD: уровни concept/logical/physical × нотации Crow's Foot/Chen/UML-class. | архитектура §5, «Волна 3» |
 | FR-NOT-09 | 4 | Система должна поддерживать **BPMN** всех 4 видов (process, collaboration, choreography, conversation) и **сети Петри** всех структур (state machines, marked graphs, ordinary, generalized) и типов (colored, timed, stochastic, inhibitor), включая ООП-сети как отдельный профиль. | архитектура §5, «Волна 4» |
@@ -80,7 +81,7 @@
 | FR-AI-09 | 1 | Система должна работать без подключённого AI-ключа: `StubAIProvider` возвращает предсказуемый черновик DSL и не выполняет сетевых обращений, чтобы остальной пайплайн (валидация/рендер/сохранение) можно было использовать и тестировать без внешней зависимости. | `backend/app/integrations/ai/stub_provider.py` |
 | FR-AI-10 | 1 | Система должна выбирать конкретную реализацию `AIProvider` по значению `AI_PROVIDER` в конфигурации (`.env`), не требуя изменений в коде вызывающей стороны (Strategy-паттерн за интерфейсом). | `backend/app/core/config.py::Settings.ai_provider`, `docs/architecture/01-ai-provider-setup.md` |
 | FR-AI-11 | 1 | Система должна сохранять историю AI-запросов (режим, текст промпта, сгенерированный DSL, время) отдельно от истории версий диаграммы. | `backend/app/models/version.py::AIRequest` |
-| FR-AI-12 | 2 | Система должна ограничивать частоту AI-запросов на пользователя (rate limiting через Redis), чтобы не исчерпать бесплатную квоту внешнего провайдера — конкретный лимит конфигурируется (см. `00-overview.md`, открытый вопрос №5). | архитектура §6, `bibliography.md` п. 70 |
+| FR-AI-12 | 2 | Система должна ограничивать частоту AI-запросов на пользователя (rate limiting через Redis) значением по умолчанию 20 запросов/день, конфигурируемым через `AI_DAILY_QUOTA` (решено, см. `00-overview.md` §5, п. 5). | архитектура §6, `bibliography.md` п. 70 |
 
 ## 6. Хранение и экспорт
 
@@ -91,7 +92,7 @@
 | FR-STORE-03 | 2 | Пользователь может загрузить диаграмму в свой Google Drive через Google Drive API (после авторизации по OAuth). | `design/mockups/SaveDropdown.dc.html` («Google Drive — API upload»), `backend/app/core/config.py::google_oauth_client_id/secret` (заготовка) |
 | FR-STORE-04 | 1 | Пользователь может выбрать способ сохранения через единый выпадающий список **Save ▾** с тремя пунктами (GitHub / Google Drive / На устройство), каждый — с кратким описанием действия. | `design/mockups/SaveDropdown.dc.html` |
 | FR-STORE-05 | 1 | Пользователь может экспортировать текущий рендер диаграммы в SVG и PNG. | архитектура (README, «экспорт в SVG/PNG/формат нотации»); формат нотации — см. `00-overview.md`, открытый вопрос №4 |
-| FR-STORE-06 | 4 | Система может (после уточнения конкретных форматов, см. открытый вопрос №4) экспортировать диаграмму в нативный формат выбранной нотации (напр. BPMN 2.0 XML, PlantUML-текст). | `bibliography.md` пп. 99–104 |
+| FR-STORE-06 | 4 | Система должна экспортировать диаграмму в нативные форматы: PlantUML/Mermaid-текст, BPMN 2.0 XML, drawio-XML (решено, см. `00-overview.md` §5, п. 4). | `bibliography.md` пп. 99–104 |
 | FR-STORE-07 | 1 | Пользователь может импортировать существующий `.dsl`-файл в редактор кнопкой **Import**. | `design/mockups/IDE-Dark.dc.html` (`.btn-ghost` «Import») |
 
 ## 7. UI/UX (IDE-оболочка)
@@ -107,7 +108,7 @@
 | FR-UI-07 | 1 | Пользователь может открыть окно истории версий (модальное) с таблицей версий и действиями «Откатиться» / «Diff выбранная ↔ текущая». | `design/mockups/VersionHistory.dc.html` |
 | FR-UI-08 | 1 | Система должна показывать модальные окна (AI, документация, история версий) поверх затемнённого и слегка размытого фонового интерфейса (scrim + blur), с явной кнопкой закрытия. | `design/mockups/AIModalText.dc.html`, `DocumentationModal.dc.html`, `VersionHistory.dc.html` |
 | FR-UI-09 | 1 | Пользователь может авторизоваться через форму email/пароль на отдельном экране логина вне основной оболочки IDE, с ссылкой на регистрацию. | `design/mockups/Login.dc.html` |
-| FR-UI-10 | 2 | Пользователь может войти через OAuth-кнопки GitHub/Google на экране логина как альтернативу email/паролю (допущение, см. `00-overview.md` §5, п. 3). | `design/mockups/Login.dc.html` (`.oauth-btn`) |
+| FR-UI-10 | 2 | Пользователь может войти через OAuth-кнопки GitHub/Google на экране логина как альтернативу email/паролю; это независимый механизм от OAuth-авторизации хранилища (решено, см. `00-overview.md` §5, п. 3). | `design/mockups/Login.dc.html` (`.oauth-btn`) |
 | FR-UI-11 | 1 | Activity bar должен подсвечивать активный раздел цветной полосой слева от иконки и более светлым фоном кнопки. | `design/mockups/IDE-Dark.dc.html` (`.abtn.active`) |
 | FR-UI-12 | 3 | Интерфейс должен быть адаптивным (отзывчивая перестройка панелей) в соответствии с методологией Mobile First и брейкпоинтами (см. `bibliography.md`, пп. 91–93) — как минимум для промежуточных десктопных разрешений; полноценная мобильная раскладка IDE не является целью (редактор кода на телефоне непрактичен), но лендинг/логин должны быть отзывчивыми. | `bibliography.md` пп. 91–93, архитектурное здравомыслие |
 
@@ -118,7 +119,8 @@
 | FR-AUTH-01 | 1 | Пользователь может зарегистрироваться по email + username + паролю; система должна отклонять регистрацию, если email уже занят. | `backend/app/services/auth_service.py::register` |
 | FR-AUTH-02 | 1 | Пользователь может войти по email + паролю и получить JWT-токен доступа. | `backend/app/services/auth_service.py::login`, `backend/app/core/security.py::create_access_token` |
 | FR-AUTH-03 | 1 | Система должна хешировать пароли (bcrypt) и никогда не хранить/не возвращать пароль в открытом виде. | `backend/app/core/security.py` (`passlib` + `CryptContext(schemes=["bcrypt"])`) |
-| FR-AUTH-04 | 2 | Пользователь может войти через OAuth (GitHub/Google) как альтернативу паролю (допущение, см. `00-overview.md` §5, п. 3). | `design/mockups/Login.dc.html` |
+| FR-AUTH-04 | 2 | Пользователь может войти через OAuth (GitHub/Google) как альтернативу паролю; это независимый механизм от OAuth-авторизации хранилища (решено, см. `00-overview.md` §5, п. 3). | `design/mockups/Login.dc.html` |
 | FR-AUTH-05 | 1 | Система должна защищать все эндпоинты диаграмм проверкой JWT (`Authorization: Bearer`) и отклонять запрос без валидного токена (401). | `backend/app/api/deps.py::get_current_user`, `CurrentUser` |
-| FR-AUTH-06 | 1 | Система должна проверять, что пользователь запрашивает/изменяет только свои диаграммы (сверка `diagram.user_id == user.id`), иначе — 404 (не раскрывая факт существования чужой диаграммы). | `backend/app/api/routes/diagrams.py::save_version/list_versions` |
+| FR-AUTH-06 | 1 | Система должна проверять, что пользователь запрашивает/изменяет только свои диаграммы (сверка `diagram.user_id == user.id`), иначе — 404 (не раскрывая факт существования чужой диаграммы). В MVP (Волна 1) `user_id` — единственный владелец; с Волны 2 проверка расширяется до FR-AUTH-08. | `backend/app/api/routes/diagrams.py::save_version/list_versions` |
 | FR-AUTH-07 | 1 | Пользователь может задать предпочитаемую тему оформления (тёмная/светлая), сохраняемую в профиле. | `backend/app/models/user.py::User.theme_preference` |
+| FR-AUTH-08 | 2 | Владелец диаграммы может добавить соавтора (по email/username), который получает право просмотра и редактирования; изменения синхронизируются между одновременно открытыми сессиями через WebSocket (решено, см. `00-overview.md` §5, п. 1). | `00-overview.md` §5, п. 1; архитектура §6 (WebSocket pub/sub) |
