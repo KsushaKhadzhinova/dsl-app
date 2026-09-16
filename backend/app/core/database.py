@@ -14,9 +14,6 @@ class Base(DeclarativeBase):
 
 @lru_cache
 def get_engine() -> Engine:
-    # Ленивая инициализация: модуль не тянет за собой БД-драйвер только оттого,
-    # что кто-то импортировал Base (например, чистые unit-тесты dsl/ и notations/,
-    # которым доступ к БД не нужен вовсе — см. docs/architecture/00-system-architecture.md, §4).
     settings = get_settings()
     return create_engine(settings.database_url, pool_pre_ping=True)
 

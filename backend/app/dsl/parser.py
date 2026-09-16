@@ -10,10 +10,6 @@ from app.domain.graph import DiagramModel, Edge, Node
 from app.dsl.errors import DslSyntaxError
 
 _GRAMMAR_PATH = Path(__file__).parent / "grammar.lark"
-# Earley, а не LALR: конструкции вроде необязательных attr* после узла требуют
-# многотокенного заглядывания вперёд, которое LALR(1) не может сделать без
-# искусственных ключевых слов-разделителей. На размере типичной диаграммы
-# (десятки-сотни токенов) разница в скорости не имеет практического значения.
 _parser = Lark(_GRAMMAR_PATH.read_text(encoding="utf-8"), parser="earley", propagate_positions=True)
 
 

@@ -7,6 +7,4 @@ class LocalDownloadProvider:
     key = "local"
 
     async def save(self, *, path: str, content: str, token: str | None) -> str:
-        # Фактическую передачу файла в браузер делает фронтенд (Blob + <a download>);
-        # бэкенду здесь достаточно отдать контент как есть через отдельный export-эндпоинт.
         return path

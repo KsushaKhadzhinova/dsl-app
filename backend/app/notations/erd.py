@@ -50,8 +50,6 @@ class ErdCrowsFootLogicalProfile:
         return issues
 
     def render(self, model: DiagramModel) -> RenderResult:
-        # Волна 1: простой layout по сетке, без обхода пересечений рёбер —
-        # достаточно для MVP, см. §5 архитектуры про поэтапное усложнение layout-движка.
         positions: dict[str, tuple[float, float]] = {}
         x, y = 40.0, 40.0
         for node in model.nodes:
