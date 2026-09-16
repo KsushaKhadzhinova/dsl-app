@@ -23,4 +23,4 @@ def list_all() -> list[NotationProfile]:
 
 
 def load_all() -> None:
-    from app.notations import erd  # noqa: F401  — волна 1; следующие волны добавляются сюда же
+    from app.notations import bpmn, erd  # noqa: F401
