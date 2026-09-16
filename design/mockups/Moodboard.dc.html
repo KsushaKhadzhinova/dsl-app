@@ -1,0 +1,144 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg:#161617; --panel:#1c1c1e; --border:#2e2e30; --border-strong:#46464a;
+    --text-primary:#e2e2e3; --text-secondary:#9c9ca0; --text-muted:#6d6d70;
+    --accent:#5b8def; --danger:#e2564c; --warning:#d9a441; --success:#4caf7d;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text-primary);}
+  .app{width:1280px;height:900px;padding:32px;overflow:hidden;}
+  h1{font-size:20px;margin:0 0 4px;}
+  .lead{color:var(--text-muted);font-size:13px;margin:0 0 24px;}
+  .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:20px;height:790px;}
+  .card{background:var(--panel);border:1px solid var(--border);border-radius:8px;padding:18px 20px;}
+  .card h2{font-size:12px;text-transform:uppercase;letter-spacing:0.6px;color:var(--text-muted);margin:0 0 14px;font-weight:600;}
+  .swatches{display:flex;gap:10px;flex-wrap:wrap;}
+  .sw{width:96px;}
+  .sw-chip{height:56px;border-radius:6px;border:1px solid var(--border-strong);}
+  .sw-label{font-size:10.5px;color:var(--text-secondary);margin-top:6px;}
+  .sw-hex{font-family:'Source Code Pro',monospace;font-size:10px;color:var(--text-muted);}
+  .type-row{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;padding-bottom:14px;border-bottom:1px solid var(--border);}
+  .type-row:last-child{border-bottom:none;}
+  .type-tag{width:64px;flex-shrink:0;font-size:10.5px;color:var(--text-muted);font-family:'Source Code Pro',monospace;}
+  .type-sample-ui{font-family:'Inter',sans-serif;}
+  .type-sample-code{font-family:'Source Code Pro',monospace;color:var(--syn, #9bc79a);}
+  .radius-row{display:flex;gap:16px;align-items:center;}
+  .rbox{background:#232326;border:1px solid var(--border-strong);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--text-muted);}
+  .spacing-row{display:flex;align-items:flex-end;gap:10px;height:80px;}
+  .sbar{background:var(--accent);border-radius:2px;width:20px;}
+  .slabel{font-size:9.5px;color:var(--text-muted);text-align:center;margin-top:6px;}
+  .motif-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+  .motif{background:#141415;border:1px solid var(--border);border-radius:6px;padding:12px;display:flex;flex-direction:column;gap:8px;}
+  .motif-label{font-size:10px;color:var(--text-muted);}
+  .btn-mini{height:26px;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:600;width:fit-content;padding:0 12px;}
+  .notation-dots{display:flex;gap:8px;flex-wrap:wrap;}
+  .ndot{display:flex;align-items:center;gap:6px;font-size:10.5px;color:var(--text-secondary);}
+  .ndot span{width:9px;height:9px;border-radius:2px;}
+</style>
+</helmet>
+<div class="app">
+  <h1>DiagramCode — мудборд дизайн-системы</h1>
+  <div class="lead">Тёмная монохромная база + один синий акцент · Inter (UI) + Source Code Pro (код) · меньше скруглений, без «AI-generated» глянца</div>
+  <div class="grid">
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="card">
+        <h2>Цветовая палитра</h2>
+        <div class="swatches">
+          <div class="sw"><div class="sw-chip" style="background:#161617"></div><div class="sw-label">Background</div><div class="sw-hex">#161617</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#1e1e1f"></div><div class="sw-label">Surface</div><div class="sw-hex">#1e1e1f</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#5b8def"></div><div class="sw-label">Primary</div><div class="sw-hex">#5b8def</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#4caf7d"></div><div class="sw-label">Success</div><div class="sw-hex">#4caf7d</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#d9a441"></div><div class="sw-label">Warning</div><div class="sw-hex">#d9a441</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#e2564c"></div><div class="sw-label">Danger</div><div class="sw-hex">#e2564c</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#e2e2e3"></div><div class="sw-label">Text (dark)</div><div class="sw-hex">#e2e2e3</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#f2f2f3;border-color:#d0d0d2"></div><div class="sw-label">Background (light)</div><div class="sw-hex">#f2f2f3</div></div>
+          <div class="sw"><div class="sw-chip" style="background:#1c1c1d"></div><div class="sw-label">Text (light)</div><div class="sw-hex">#1c1c1d</div></div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Типографика</h2>
+        <div class="type-row"><div class="type-tag">H1 / UI</div><div class="type-sample-ui" style="font-size:22px;font-weight:700;">Диаграммы как код</div></div>
+        <div class="type-row"><div class="type-tag">Body / UI</div><div class="type-sample-ui" style="font-size:13px;color:var(--text-secondary);">Inter, обычный текст интерфейса и лейблы</div></div>
+        <div class="type-row"><div class="type-tag">Код</div><div class="type-sample-code" style="font-size:13px;color:#9bc79a;">petri "OrderNet" { place p1 }</div></div>
+        <div class="type-row"><div class="type-tag">Мета</div><div class="type-sample-ui" style="font-size:10.5px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.5px;">Ln 9 · UTF-8 · Русский</div></div>
+      </div>
+      <div class="card">
+        <h2>Скругления и отступы</h2>
+        <div class="radius-row">
+          <div class="rbox" style="width:56px;height:56px;border-radius:3px;">3px — карточки</div>
+          <div class="rbox" style="width:56px;height:56px;border-radius:6px;">6px — панели</div>
+          <div class="rbox" style="width:56px;height:56px;border-radius:50%;">circle — аватар</div>
+        </div>
+        <div style="height:16px"></div>
+        <div class="spacing-row">
+          <div><div class="sbar" style="height:8px;"></div><div class="slabel">8</div></div>
+          <div><div class="sbar" style="height:16px;"></div><div class="slabel">16</div></div>
+          <div><div class="sbar" style="height:24px;"></div><div class="slabel">24</div></div>
+          <div><div class="sbar" style="height:32px;"></div><div class="slabel">32</div></div>
+          <div><div class="sbar" style="height:48px;"></div><div class="slabel">48</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:flex;flex-direction:column;gap:16px;">
+      <div class="card">
+        <h2>Компоненты (мотивы)</h2>
+        <div class="motif-grid">
+          <div class="motif">
+            <div class="motif-label">Кнопки</div>
+            <div class="btn-mini" style="background:var(--accent);color:#0d1424;">Primary</div>
+            <div class="btn-mini" style="border:1px solid var(--border-strong);color:var(--text-secondary);">Ghost</div>
+            <div class="btn-mini" style="background:var(--success);color:#0d1f16;">Run</div>
+          </div>
+          <div class="motif">
+            <div class="motif-label">Статусы</div>
+            <div style="font-size:11px;color:var(--success);">✓ 0 errors</div>
+            <div style="font-size:11px;color:var(--warning);">⚠ 1 warning</div>
+            <div style="font-size:11px;color:var(--danger);">✕ ошибка синтаксиса</div>
+          </div>
+          <div class="motif">
+            <div class="motif-label">Поле ввода</div>
+            <div style="height:30px;border:1px solid var(--border-strong);border-radius:4px;background:#141415;display:flex;align-items:center;padding:0 10px;font-size:11px;color:var(--text-secondary);">Найти шаблон...</div>
+          </div>
+          <div class="motif">
+            <div class="motif-label">Тег нотации</div>
+            <div style="height:26px;border:1px solid var(--border-strong);border-radius:4px;background:#1f1f21;display:flex;align-items:center;padding:0 10px;font-size:11px;color:var(--text-secondary);width:fit-content;">Notation: <b style="color:var(--text-primary);margin-left:4px;">Petri Nets</b></div>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <h2>Цвета нотаций (точки в сайдбаре)</h2>
+        <div class="notation-dots">
+          <div class="ndot"><span style="background:#5b8def"></span>UML</div>
+          <div class="ndot"><span style="background:#d9a441"></span>BPMN</div>
+          <div class="ndot"><span style="background:#4caf7d"></span>ERD</div>
+          <div class="ndot"><span style="background:#e2564c"></span>Petri Nets</div>
+          <div class="ndot"><span style="background:#b8a9d9"></span>IDEF0</div>
+          <div class="ndot"><span style="background:#7dd3d8"></span>DFD</div>
+          <div class="ndot"><span style="background:#6d6d70"></span>Без нотации</div>
+        </div>
+      </div>
+      <div class="card" style="flex:1;">
+        <h2>Принципы</h2>
+        <div style="font-size:12px;color:var(--text-secondary);line-height:1.7;">
+          Меньше похоже на «сгенерировано ИИ»: нейтральные иконки-обводки вместо ярких эмодзи-иллюстраций, минимум градиентов, один акцентный синий вместо радужной палитры.<br><br>
+          Разные шрифты для UI и кода — читается сразу, что это IDE, а не лендинг.<br><br>
+          Меньше скруглений, чем в типичных «дружелюбных» SaaS-интерфейсах — 3–6px, не 16–24px.<br><br>
+          Кнопки и поля никогда не «полурабочие» — на всех макетах ровно то поведение, что описано в тексте рядом.
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

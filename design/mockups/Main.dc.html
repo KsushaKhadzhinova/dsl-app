@@ -1,0 +1,138 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg-app:#161617; --bg-titlebar:#1c1c1e; --bg-activity:#1a1a1b; --bg-sidebar:#202021;
+    --bg-editor:#141415; --bg-canvas:#232326; --bg-panel:#1a1a1b;
+    --border:#2e2e30; --border-strong:#46464a;
+    --text-primary:#e2e2e3; --text-secondary:#9c9ca0; --text-muted:#6d6d70;
+    --accent:#5b8def; --success:#4caf7d;
+    --syn-kw:#7dd3d8; --syn-str:#9bc79a; --syn-id:#b8a9d9;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:#0e0e0f;color:var(--text-primary);}
+  .stage{width:1680px;height:980px;padding:24px;position:relative;}
+  h1{font-size:16px;margin:0 0 16px;color:var(--text-primary);}
+  .frame-wrap{position:relative;width:1300px;height:820px;}
+  .app{width:1300px;height:820px;display:flex;flex-direction:column;background:var(--bg-app);overflow:hidden;border-radius:6px;border:1px solid var(--border-strong);}
+  .titlebar{height:40px;flex-shrink:0;background:var(--bg-titlebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 12px;gap:12px;}
+  .brand{display:flex;align-items:center;gap:7px;font-weight:700;font-size:12.5px;}
+  .dd{display:flex;align-items:center;gap:6px;height:26px;padding:0 9px;border:1px solid var(--border-strong);border-radius:4px;font-size:11px;color:var(--text-secondary);background:#1f1f21;}
+  .dd b{color:var(--text-primary);font-weight:500;}
+  .filepath{flex:1;text-align:center;font-size:11px;color:var(--text-muted);}
+  .btn{display:flex;align-items:center;gap:5px;height:26px;padding:0 10px;border-radius:4px;font-size:11px;font-weight:500;}
+  .btn-run{background:var(--success);color:#0d1f16;}
+  .btn-ghost{color:var(--text-secondary);border:1px solid var(--border-strong);}
+  .btn-ai{background:linear-gradient(180deg,#3a3a3f,#242427);border:1px solid var(--border-strong);}
+  .body-row{flex:1;display:flex;min-height:0;}
+  .activity-bar{width:42px;flex-shrink:0;background:var(--bg-activity);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:5px;}
+  .abtn{width:30px;height:30px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);}
+  .abtn.active{color:var(--text-primary);background:#2a2a2c;}
+  .sidebar{width:190px;flex-shrink:0;background:var(--bg-sidebar);border-right:1px solid var(--border);padding:10px 0;}
+  .sb-head{font-size:10px;font-weight:600;letter-spacing:0.5px;color:var(--text-muted);text-transform:uppercase;padding:0 12px 8px;}
+  .tpl{display:flex;align-items:center;gap:7px;height:26px;padding:0 12px;font-size:11px;color:var(--text-secondary);}
+  .tpl span{width:7px;height:7px;border-radius:2px;}
+  .split{flex:1;display:flex;min-width:0;}
+  .editor{width:46%;background:var(--bg-editor);padding:10px 12px;font-family:'Source Code Pro',monospace;font-size:11.5px;line-height:19px;color:var(--text-secondary);}
+  .kw{color:var(--syn-kw);} .str{color:var(--syn-str);} .id{color:var(--syn-id);}
+  .canvas{flex:1;background:var(--bg-canvas);background-image:radial-gradient(#38383b 1px, transparent 1px);background-size:20px 20px;position:relative;}
+  .bottom-panel{height:110px;flex-shrink:0;background:var(--bg-panel);border-top:1px solid var(--border);}
+  .bp-tabs{height:26px;display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 10px;gap:12px;font-size:10.5px;color:var(--text-muted);}
+  .bp-tabs .active{color:var(--text-primary);}
+  .bp-body{padding:8px 12px;font-family:'Source Code Pro',monospace;font-size:10.5px;color:var(--text-secondary);}
+  .statusbar{height:22px;background:var(--accent);color:#0d1424;display:flex;align-items:center;padding:0 10px;font-size:10px;gap:14px;font-weight:600;}
+  .pin{position:absolute;width:22px;height:22px;border-radius:50%;background:var(--accent);color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;border:2px solid #0e0e0f;z-index:5;}
+  .legend{position:absolute;right:24px;top:24px;width:320px;background:#1c1c1e;border:1px solid var(--border-strong);border-radius:8px;padding:16px 18px;}
+  .legend h2{font-size:11px;text-transform:uppercase;letter-spacing:0.5px;color:var(--text-muted);margin:0 0 12px;}
+  .litem{display:flex;gap:10px;margin-bottom:11px;align-items:flex-start;}
+  .lpin{width:18px;height:18px;border-radius:50%;background:var(--accent);color:#fff;font-size:10px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-top:1px;}
+  .ltext{font-size:11.5px;color:var(--text-secondary);line-height:1.45;}
+  .ltext b{color:var(--text-primary);}
+</style>
+</helmet>
+<div class="stage">
+  <h1>DiagramCode — главный экран IDE, аннотированная схема зон интерфейса</h1>
+  <div class="frame-wrap">
+    <div class="app">
+      <div class="titlebar">
+        <div class="brand">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="#e2e2e3" stroke-width="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="#e2e2e3" stroke-width="1.6"/><path d="M11 7h6M17 7v6" stroke="#5b8def" stroke-width="1.6" stroke-linecap="round"/></svg>
+          DiagramCode
+        </div>
+        <div class="dd">Notation: <b>Petri Nets</b></div>
+        <div class="filepath">workspace / diagrams / <b style="color:#9c9ca0">process.dsl</b></div>
+        <div class="btn btn-run">Run</div>
+        <div class="btn btn-ghost">Save</div>
+        <div class="btn btn-ai">AI</div>
+      </div>
+      <div class="body-row">
+        <div class="activity-bar">
+          <div class="abtn active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h6l2 2h8v12a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="abtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/></svg></div>
+          <div class="abtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 21V3l16 9-16 9z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+        </div>
+        <div class="sidebar">
+          <div class="sb-head">Templates</div>
+          <div class="tpl"><span style="background:#5b8def"></span>UML</div>
+          <div class="tpl"><span style="background:#d9a441"></span>BPMN</div>
+          <div class="tpl"><span style="background:#4caf7d"></span>ERD</div>
+          <div class="tpl" style="color:#e2e2e3"><span style="background:#e2564c"></span>Petri Nets</div>
+        </div>
+        <div class="split">
+          <div class="editor">
+            <span class="kw">petri</span> <span class="str">"OrderNet"</span> {<br>
+            &nbsp;&nbsp;<span class="kw">place</span> p1 <span class="id">"Новая заявка"</span><br>
+            &nbsp;&nbsp;<span class="kw">place</span> p2 <span class="id">"В обработке"</span><br>
+            &nbsp;&nbsp;<span class="kw">transition</span> t1 <span class="id">"Принять"</span><br>
+            &nbsp;&nbsp;p1 -&gt; t1 -&gt; p2<br>
+            }
+          </div>
+          <div class="canvas">
+            <svg width="100%" height="100%" viewBox="0 0 560 380">
+              <circle cx="110" cy="150" r="28" fill="none" stroke="#8a8a8d" stroke-width="1.6"/>
+              <rect x="200" y="134" width="40" height="32" rx="2" fill="none" stroke="#8a8a8d" stroke-width="1.6"/>
+              <circle cx="340" cy="150" r="28" fill="none" stroke="#5b8def" stroke-width="2"/>
+              <path d="M138 150h58M240 150h68" stroke="#8a8a8d" stroke-width="1.4" marker-end="url(#mh)"/>
+              <defs><marker id="mh" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0l7 3-7 3z" fill="#8a8a8d"/></marker></defs>
+            </svg>
+          </div>
+        </div>
+      </div>
+      <div class="bottom-panel">
+        <div class="bp-tabs"><span class="active">Terminal</span><span>Problems</span></div>
+        <div class="bp-body" style="color:#4caf7d">✓ SUCCESS — 2 places, 1 transition — 31ms</div>
+      </div>
+      <div class="statusbar">
+        <div>⟳ Synced</div><div>Petri Nets</div><div style="flex:1"></div><div>Ln 6, Col 1</div><div>UTF-8</div><div>Русский</div>
+      </div>
+    </div>
+    <div class="pin" style="left:400px;top:-11px;">1</div>
+    <div class="pin" style="left:15px;top:120px;">2</div>
+    <div class="pin" style="left:110px;top:120px;">3</div>
+    <div class="pin" style="left:420px;top:250px;">4</div>
+    <div class="pin" style="left:950px;top:250px;">5</div>
+    <div class="pin" style="left:600px;top:650px;">6</div>
+    <div class="pin" style="left:600px;top:800px;">7</div>
+  </div>
+  <div class="legend">
+    <h2>Зоны интерфейса</h2>
+    <div class="litem"><div class="lpin">1</div><div class="ltext"><b>Верхняя панель</b> — логотип, селектор нотации, путь к файлу, кнопки Run / Save / Export / Import / AI, аватар пользователя.</div></div>
+    <div class="litem"><div class="lpin">2</div><div class="ltext"><b>Activity Bar</b> — переключение между шаблонами, поиском, отладкой, историей версий.</div></div>
+    <div class="litem"><div class="lpin">3</div><div class="ltext"><b>Сайдбар «Templates»</b> — список нотаций с цветовой меткой и список открытых файлов.</div></div>
+    <div class="litem"><div class="lpin">4</div><div class="ltext"><b>Редактор кода</b> — DSL с подсветкой синтаксиса; изменяемая ширина через resize-handle.</div></div>
+    <div class="litem"><div class="lpin">5</div><div class="ltext"><b>Канвас диаграммы</b> — визуальный рендер в стиле draw.io, синхронизирован со строкой в редакторе.</div></div>
+    <div class="litem"><div class="lpin">6</div><div class="ltext"><b>Нижняя панель</b> — вкладки Terminal / Problems, вывод результата парсинга и рендера.</div></div>
+    <div class="litem"><div class="lpin">7</div><div class="ltext"><b>Статус-бар</b> — статус синхронизации, активная нотация, позиция курсора, кодировка, язык интерфейса.</div></div>
+  </div>
+</div>
+</x-dc>
+</body>
+</html>

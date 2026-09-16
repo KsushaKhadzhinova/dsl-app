@@ -1,0 +1,126 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Code+Pro:wght@400;500&display=swap">
+<style>
+  :root{
+    --bg-app:#161617; --bg-titlebar:#1c1c1e; --bg-activity:#1a1a1b; --bg-editor:#141415; --bg-canvas:#232326; --bg-panel:#1a1a1b;
+    --border:#2e2e30; --border-strong:#46464a;
+    --text-primary:#e2e2e3; --text-secondary:#9c9ca0; --text-muted:#6d6d70;
+    --accent:#5b8def; --success:#4caf7d;
+    --syn-kw:#7dd3d8; --syn-str:#9bc79a; --syn-id:#b8a9d9; --syn-cm:#6d6d70; --syn-num:#e0b979;
+  }
+  *{box-sizing:border-box;}
+  body{margin:0;font-family:'Inter',system-ui,sans-serif;background:var(--bg-app);color:var(--text-primary);}
+  .app{width:820px;height:900px;display:flex;flex-direction:column;background:var(--bg-app);overflow:hidden;position:relative;border-left:1px solid var(--border);border-right:1px solid var(--border);}
+  .label-tag{position:absolute;top:-34px;left:0;font-size:12px;color:var(--text-muted);font-weight:600;}
+  .titlebar{height:44px;flex-shrink:0;background:var(--bg-titlebar);border-bottom:1px solid var(--border);display:flex;align-items:center;padding:0 10px;gap:10px;}
+  .brand{display:flex;align-items:center;gap:8px;font-weight:700;font-size:13px;}
+  .dd{display:flex;align-items:center;gap:6px;height:26px;padding:0 8px;border:1px solid var(--border-strong);border-radius:4px;font-size:11px;color:var(--text-secondary);background:#1f1f21;}
+  .dd b{color:var(--text-primary);font-weight:500;}
+  .spacer{flex:1;}
+  .btn{display:flex;align-items:center;gap:5px;height:26px;padding:0 9px;border-radius:4px;font-size:11px;font-weight:500;}
+  .btn-run{background:var(--success);color:#0d1f16;}
+  .btn-ghost{color:var(--text-secondary);border:1px solid var(--border-strong);}
+  .avatar{width:24px;height:24px;border-radius:50%;background:#3a3a3d;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:600;border:1px solid var(--border-strong);}
+  .body-row{flex:1;display:flex;min-height:0;}
+  .activity-bar{width:44px;flex-shrink:0;background:var(--bg-activity);border-right:1px solid var(--border);display:flex;flex-direction:column;align-items:center;padding:10px 0;gap:4px;}
+  .abtn{width:32px;height:32px;border-radius:6px;display:flex;align-items:center;justify-content:center;color:var(--text-muted);}
+  .abtn.active{color:var(--text-primary);background:#2a2a2c;}
+  .main-col{flex:1;display:flex;flex-direction:column;min-width:0;}
+  .view-tabs{height:36px;flex-shrink:0;display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 8px;gap:4px;background:var(--bg-titlebar);}
+  .vtab{height:28px;padding:0 14px;border-radius:5px;display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-muted);}
+  .vtab.active{background:#2a2a2c;color:var(--text-primary);}
+  .view-body{flex:1;min-height:0;position:relative;}
+  .editor{position:absolute;inset:0;background:var(--bg-editor);display:none;}
+  .editor.show{display:flex;}
+  .gutter{width:38px;flex-shrink:0;padding:10px 0;text-align:right;font-size:12px;line-height:20px;color:#4a4a4d;font-family:'Source Code Pro',monospace;}
+  .code{flex:1;padding:10px 12px;font-family:'Source Code Pro',monospace;font-size:12.5px;line-height:20px;}
+  .kw{color:var(--syn-kw);} .str{color:var(--syn-str);} .id{color:var(--syn-id);} .cm{color:var(--syn-cm);}
+  .canvas{position:absolute;inset:0;background:var(--bg-canvas);background-image:radial-gradient(#38383b 1px, transparent 1px);background-size:22px 22px;display:none;}
+  .canvas.show{display:block;}
+  .bottom-panel{height:130px;flex-shrink:0;background:var(--bg-panel);border-top:1px solid var(--border);display:flex;flex-direction:column;}
+  .bp-tabs{height:28px;display:flex;align-items:center;border-bottom:1px solid var(--border);padding:0 10px;gap:14px;font-size:11px;color:var(--text-muted);}
+  .bp-tabs .active{color:var(--text-primary);}
+  .bp-body{flex:1;padding:8px 12px;font-family:'Source Code Pro',monospace;font-size:11px;color:var(--text-secondary);line-height:17px;}
+  .bp-body .ok{color:var(--success);}
+  .statusbar{height:22px;flex-shrink:0;background:var(--accent);color:#0d1424;display:flex;align-items:center;padding:0 10px;font-size:10.5px;gap:12px;font-weight:600;}
+  .callout{position:absolute;background:#fff;color:#111;font-size:11px;font-weight:600;padding:6px 10px;border-radius:3px;box-shadow:0 6px 16px rgba(0,0,0,0.35);max-width:220px;line-height:1.4;}
+</style>
+</helmet>
+<div class="app">
+  <div class="label-tag">Планшет · 820px · редактор и холст больше не помещаются рядом → переключаются вкладками</div>
+  <div class="titlebar">
+    <div class="brand">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="8" height="8" rx="1.5" stroke="#e2e2e3" stroke-width="1.6"/><rect x="13" y="13" width="8" height="8" rx="1.5" stroke="#e2e2e3" stroke-width="1.6"/><path d="M11 7h6M17 7v6" stroke="#5b8def" stroke-width="1.6" stroke-linecap="round"/></svg>
+      DiagramCode
+    </div>
+    <div class="dd">Petri Nets</div>
+    <div class="spacer"></div>
+    <div class="btn btn-run"><svg width="11" height="11" viewBox="0 0 24 24" fill="#0d1f16"><path d="M6 4l14 8-14 8V4z"/></svg>Run</div>
+    <div class="btn btn-ghost">⋯</div>
+    <div class="avatar">КХ</div>
+  </div>
+  <div class="body-row">
+    <div class="activity-bar">
+      <div class="abtn active"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 4h6l2 2h8v12a1 1 0 01-1 1H4a1 1 0 01-1-1V5a1 1 0 011-1z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+      <div class="abtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><circle cx="11" cy="11" r="7" stroke="currentColor" stroke-width="1.6"/><path d="M21 21l-4.3-4.3" stroke="currentColor" stroke-width="1.6"/></svg></div>
+      <div class="abtn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none"><path d="M4 21V3l16 9-16 9z" stroke="currentColor" stroke-width="1.6"/></svg></div>
+    </div>
+    <div class="main-col">
+      <div class="view-tabs">
+        <div class="vtab"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><path d="M8 8l-5 4 5 4M16 8l5 4-5 4" stroke="currentColor" stroke-width="1.8"/></svg>Код</div>
+        <div class="vtab active"><svg width="13" height="13" viewBox="0 0 24 24" fill="none"><circle cx="7" cy="7" r="3" stroke="currentColor" stroke-width="1.6"/><circle cx="17" cy="17" r="3" stroke="currentColor" stroke-width="1.6"/><path d="M9.5 9.5l5 5" stroke="currentColor" stroke-width="1.6"/></svg>Диаграмма</div>
+      </div>
+      <div class="view-body">
+        <div class="editor">
+          <div class="gutter">1<br>2<br>3<br>4<br>5<br>6</div>
+          <div class="code">
+            <span class="kw">petri</span> <span class="str">"OrderNet"</span> {<br>
+            &nbsp;&nbsp;<span class="kw">place</span> p1 <span class="id">"Новая заявка"</span><br>
+            &nbsp;&nbsp;<span class="kw">place</span> p2 <span class="id">"В обработке"</span><br>
+            &nbsp;&nbsp;<span class="kw">transition</span> t1 <span class="id">"Принять"</span><br>
+            &nbsp;&nbsp;p1 -&gt; t1 -&gt; p2<br>
+            }
+          </div>
+        </div>
+        <div class="canvas show">
+          <svg width="100%" height="100%" viewBox="0 0 600 360">
+            <circle cx="110" cy="150" r="30" fill="none" stroke="#8a8a8d" stroke-width="1.8"/>
+            <text x="110" y="200" text-anchor="middle" font-family="Inter" font-size="12" fill="#9c9ca0">Новая заявка</text>
+            <rect x="210" y="132" width="42" height="36" rx="2" fill="none" stroke="#8a8a8d" stroke-width="1.8"/>
+            <text x="231" y="188" text-anchor="middle" font-family="Inter" font-size="12" fill="#9c9ca0">Принять</text>
+            <path d="M140 150h68" stroke="#8a8a8d" stroke-width="1.6" marker-end="url(#th)"/>
+            <circle cx="380" cy="150" r="30" fill="none" stroke="#5b8def" stroke-width="2"/>
+            <text x="380" y="200" text-anchor="middle" font-family="Inter" font-size="12" fill="#e2e2e3">В обработке</text>
+            <path d="M252 150h96" stroke="#5b8def" stroke-width="1.8" marker-end="url(#thb)"/>
+            <defs>
+              <marker id="th" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0l7 3-7 3z" fill="#8a8a8d"/></marker>
+              <marker id="thb" markerWidth="8" markerHeight="8" refX="7" refY="3" orient="auto"><path d="M0 0l7 3-7 3z" fill="#5b8def"/></marker>
+            </defs>
+          </svg>
+        </div>
+      </div>
+      <div class="bottom-panel">
+        <div class="bp-tabs"><span class="active">Terminal</span><span>Problems</span></div>
+        <div class="bp-body"><span class="ok">✓ SUCCESS — 2 places, 1 transition — 31ms</span></div>
+      </div>
+      <div class="statusbar">
+        <div>⟳ Synced</div>
+        <div>Petri Nets</div>
+        <div style="flex:1"></div>
+        <div>UTF-8</div>
+      </div>
+    </div>
+  </div>
+  <div class="callout" style="left:330px;top:310px;">Вкладки «Код / Диаграмма» вместо side-by-side сплита — панель шаблонов скрыта, остаётся только рельс иконок</div>
+</div>
+</x-dc>
+</body>
+</html>
