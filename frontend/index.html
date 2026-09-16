@@ -22,10 +22,14 @@
         <ul class="site-nav__list">
           <li class="site-nav__item"><a class="site-nav__link" href="#features">Возможности</a></li>
           <li class="site-nav__item"><a class="site-nav__link" href="#notations">Нотации</a></li>
+          <li class="site-nav__item"><a class="site-nav__link" href="#faq">Вопросы</a></li>
           <li class="site-nav__item"><a class="site-nav__link" href="#about">О проекте</a></li>
           <li class="site-nav__item"><a class="site-nav__link" href="#author">Автор</a></li>
         </ul>
       </nav>
+      <button type="button" class="theme-toggle" id="theme-toggle" aria-pressed="false">
+        Светлая тема
+      </button>
     </div>
   </header>
 
@@ -83,17 +87,22 @@
     </section>
 
     <section id="notations" class="notations" aria-labelledby="notations-title">
-      <h2 id="notations-title" class="notations__title">Поддерживаемые нотации</h2>
-      <ul class="notations__list">
-        <li class="notations__item">UML</li>
-        <li class="notations__item">BPMN</li>
-        <li class="notations__item">ERD</li>
-        <li class="notations__item">Сети Петри</li>
-        <li class="notations__item">IDEF0</li>
-        <li class="notations__item">IDEF3</li>
-        <li class="notations__item">DFD</li>
-        <li class="notations__item">Без нотации</li>
-      </ul>
+      <div class="notations__main">
+        <h2 id="notations-title" class="notations__title">Поддерживаемые нотации</h2>
+        <label class="notations__filter-label" for="notations-filter">Фильтр по названию</label>
+        <input class="notations__filter" type="text" id="notations-filter" placeholder="Например: BPMN">
+        <ul class="notations__list" id="notations-list">
+          <li class="notations__item">UML</li>
+          <li class="notations__item">BPMN</li>
+          <li class="notations__item">ERD</li>
+          <li class="notations__item">Сети Петри</li>
+          <li class="notations__item">IDEF0</li>
+          <li class="notations__item">IDEF3</li>
+          <li class="notations__item">DFD</li>
+          <li class="notations__item">Без нотации</li>
+        </ul>
+        <p class="notations__empty" id="notations-empty" hidden>Ничего не найдено.</p>
+      </div>
       <aside class="notations__aside" aria-label="Быстрые факты">
         <h3 class="notations__aside-title">Почему это удобно</h3>
         <p class="notations__aside-text">
@@ -101,6 +110,30 @@
           и генерировать программно, а не перетаскивать фигуры мышью.
         </p>
       </aside>
+    </section>
+
+    <section id="faq" class="faq" aria-labelledby="faq-title">
+      <h2 id="faq-title" class="faq__title">Частые вопросы</h2>
+      <div class="faq__list">
+        <div class="faq__item">
+          <div class="faq__question" role="button" tabindex="0" aria-expanded="false">
+            Нужно ли устанавливать что-то локально?
+          </div>
+          <p class="faq__answer" hidden>Нет, DiagramCode работает прямо в браузере.</p>
+        </div>
+        <div class="faq__item">
+          <div class="faq__question" role="button" tabindex="0" aria-expanded="false">
+            Куда сохраняются диаграммы?
+          </div>
+          <p class="faq__answer" hidden>На выбор: GitHub, Google Drive или локально на устройство.</p>
+        </div>
+        <div class="faq__item">
+          <div class="faq__question" role="button" tabindex="0" aria-expanded="false">
+            Можно ли сгенерировать диаграмму по описанию на естественном языке?
+          </div>
+          <p class="faq__answer" hidden>Да, через ИИ-помощника — текстом или по загруженному изображению макета.</p>
+        </div>
+      </div>
     </section>
 
     <section id="about" class="about" aria-labelledby="about-title"
