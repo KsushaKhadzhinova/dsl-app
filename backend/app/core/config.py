@@ -16,6 +16,7 @@ class Settings(BaseSettings):
 
     ai_provider: str = "stub"
     ai_api_key: str | None = None
+    ai_daily_quota: int = 20
 
     github_client_id: str | None = None
     github_client_secret: str | None = None
