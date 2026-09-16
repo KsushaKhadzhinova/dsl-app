@@ -1,0 +1,18 @@
+Цветовая палитра (тёмная тема, монохром + один акцент):
+--color-primary: #5b8def
+--color-background: #161617
+--color-text: #e2e2e3
+--color-danger: #e2564c
+--color-warning: #d9a441
+--color-success: #4caf7d
+
+Светлая тема:
+--color-background: #f2f2f3
+--color-text: #1c1c1d
+
+Шрифты:
+UI: Inter (Google Fonts)
+Код: Source Code Pro (Google Fonts)
+
+Источник дизайн-системы: docs/architecture/00-system-architecture.md,
+макеты: design/mockups/*.dc.html

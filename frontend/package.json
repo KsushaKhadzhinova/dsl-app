@@ -1,0 +1,15 @@
+{
+  "name": "diagramcode-frontend",
+  "version": "1.0.0",
+  "description": "DiagramCode frontend (Part 1 labs progression: vanilla HTML/CSS/JS -> React in Lab 7)",
+  "main": "index.html",
+  "scripts": {
+    "dev": "nodemon --watch . --ext html,css,js --exec \"echo saved\""
+  },
+  "dependencies": {
+    "lodash": "^4.17.21"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
