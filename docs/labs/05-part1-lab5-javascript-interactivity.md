@@ -23,6 +23,24 @@
 
 Ключ `dc-theme`, значение `'dark'` или `'light'`. Файл: `frontend/js/script.js`, функции `applyTheme`/`initThemeToggle`.
 
+## Исправление после сверки с полным текстом задания
+
+Задание прямо просит структуру `js/script.js` + `js/components/` + `js/utils/` — изначально
+всё лежало в одном `js/script.js`. Исправлено на ветке (отдельный коммит): код разложен на
+`components/{themeToggle,notationsFilter,faqAccordion,burgerMenu,subscribeForm}.js` +
+`utils/storage.js` (обёртки `readJSON`/`writeJSON` над `localStorage`), всё через настоящие
+ES-модули (`import`/`export`, `<script type="module">`) — это чище, чем полагаться на общую
+глобальную область видимости классических `<script>`-тегов, и ровно тот же паттерн, который
+задание само использует в примерах для Lab 6.
+
+Добавлено то, что изначально было пропущено:
+- **Бургер-меню** — `components/burgerMenu.js` подключает клик по кнопке из Lab 4 к
+  классу `.site-nav--open` и обновляет `aria-expanded`/`aria-label`.
+- **Форма с валидацией (Часть 5)** — блок «Быть в курсе обновлений»: email-подписка с
+  проверкой на пустоту и формат, выводом ошибки и сохранением подписчиков в LocalStorage
+  (`components/subscribeForm.js`) — ранее в проекте не было ни одной формы вообще, хотя
+  задание явно просит её при применимости к теме проекта.
+
 ## Тесты
 
 Jest + jsdom (`frontend/tests/script.test.js`), 21 тестов на все функции `script.js`
