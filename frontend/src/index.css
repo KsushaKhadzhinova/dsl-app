@@ -15,21 +15,17 @@
   box-sizing: border-box;
 }
 
-:root[data-theme="light"] {
-  --color-background: #f2f2f3;
-  --color-surface: #ffffff;
-  --color-text: #1c1c1d;
-  --color-text-muted: #5a5a5c;
-  --color-border: #dcdce0;
-}
-
 body {
   margin: 0;
   font-family: var(--font-family-main);
   background: var(--color-background);
   color: var(--color-text);
   line-height: 1.5;
-  transition: background 0.2s ease, color 0.2s ease;
+}
+
+img {
+  max-width: 100%;
+  display: block;
 }
 
 .skip-link {
@@ -46,13 +42,6 @@ body {
 .skip-link:focus {
   top: 0;
 }
-
-img {
-  max-width: 100%;
-  display: block;
-}
-
-/* base (mobile-first) */
 
 .site-header {
   border-bottom: 1px solid var(--color-border);
@@ -75,11 +64,6 @@ img {
   gap: var(--spacing-unit);
   text-decoration: none;
   color: var(--color-text);
-}
-
-.site-header__logo-icon {
-  width: 28px;
-  height: 28px;
 }
 
 .site-header__logo-text {
@@ -106,23 +90,6 @@ img {
   color: var(--color-primary);
 }
 
-.theme-toggle {
-  background: transparent;
-  border: 1px solid var(--color-border);
-  color: var(--color-text);
-  border-radius: 4px;
-  padding: calc(var(--spacing-unit) / 2) var(--spacing-unit);
-  font-family: var(--font-family-main);
-  font-size: 0.85rem;
-  cursor: pointer;
-}
-
-.theme-toggle:hover,
-.theme-toggle:focus {
-  border-color: var(--color-primary);
-  color: var(--color-primary);
-}
-
 .page {
   max-width: var(--container-width);
   margin: 0 auto;
@@ -130,9 +97,6 @@ img {
 }
 
 .hero {
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing-unit) * 3);
   padding: calc(var(--spacing-unit) * 4) 0;
 }
 
@@ -143,14 +107,7 @@ img {
 
 .hero__subtitle {
   color: var(--color-text-muted);
-}
-
-.hero__image {
-  width: 100%;
-  max-width: 100%;
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  background: var(--color-surface);
+  max-width: 640px;
 }
 
 .features {
@@ -159,6 +116,7 @@ img {
 
 .features__title,
 .notations__title,
+.repo-stats__title,
 .about__title {
   font-size: 1.4rem;
   margin-bottom: calc(var(--spacing-unit) * 2);
@@ -177,12 +135,6 @@ img {
   padding: calc(var(--spacing-unit) * 3);
 }
 
-.feature-card__icon {
-  width: 32px;
-  height: 32px;
-  margin-bottom: var(--spacing-unit);
-}
-
 .feature-card__title {
   font-size: 1.05rem;
   margin: 0 0 var(--spacing-unit);
@@ -196,28 +148,6 @@ img {
 
 .notations {
   padding: calc(var(--spacing-unit) * 3) 0;
-  display: flex;
-  flex-direction: column;
-  gap: calc(var(--spacing-unit) * 3);
-}
-
-.notations__filter-label {
-  display: block;
-  font-size: 0.85rem;
-  color: var(--color-text-muted);
-  margin-bottom: calc(var(--spacing-unit) / 2);
-}
-
-.notations__filter {
-  width: 100%;
-  max-width: 260px;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 4px;
-  color: var(--color-text);
-  padding: var(--spacing-unit);
-  font-family: var(--font-family-main);
-  margin-bottom: calc(var(--spacing-unit) * 2);
 }
 
 .notations__list {
@@ -229,11 +159,6 @@ img {
   gap: var(--spacing-unit);
 }
 
-.notations__empty {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-}
-
 .notations__item {
   font-family: var(--font-family-code);
   background: var(--color-surface);
@@ -243,68 +168,9 @@ img {
   font-size: 0.9rem;
 }
 
-.notations__aside {
-  border-left: 2px solid var(--color-primary);
-  padding-left: calc(var(--spacing-unit) * 2);
-}
-
-.notations__aside-title {
-  margin: 0 0 var(--spacing-unit);
-  font-size: 1rem;
-}
-
-.notations__aside-text {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
-  margin: 0;
-}
-
-.faq {
-  padding: calc(var(--spacing-unit) * 3) 0;
-}
-
-.faq__title {
-  font-size: 1.4rem;
-  margin-bottom: calc(var(--spacing-unit) * 2);
-}
-
-.faq__item {
-  border-bottom: 1px solid var(--color-border);
-}
-
-.faq__question {
-  padding: calc(var(--spacing-unit) * 2) 0;
-  cursor: pointer;
-  font-weight: 600;
-}
-
-.faq__question:focus {
-  outline: 2px solid var(--color-primary);
-  outline-offset: 2px;
-}
-
-.faq__question[aria-expanded="true"] {
-  color: var(--color-primary);
-}
-
-.faq__answer {
-  color: var(--color-text-muted);
-  margin: 0 0 calc(var(--spacing-unit) * 2);
-}
-
 .repo-stats {
   padding: calc(var(--spacing-unit) * 3) 0;
   border-top: 1px solid var(--color-border);
-}
-
-.repo-stats__title {
-  font-size: 1.4rem;
-  margin-bottom: calc(var(--spacing-unit) * 2);
-}
-
-.repo-stats__status {
-  color: var(--color-text-muted);
-  font-size: 0.9rem;
 }
 
 .repo-stats__grid {
@@ -343,29 +209,13 @@ img {
   max-width: 640px;
 }
 
-.about__logo {
-  width: 40px;
-  height: 40px;
-  margin: calc(var(--spacing-unit) * 2) 0;
-}
-
 .author {
   margin-top: calc(var(--spacing-unit) * 3);
-  display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: var(--spacing-unit);
 }
 
 .author__title {
   font-size: 1.1rem;
   margin: 0 0 var(--spacing-unit);
-}
-
-.author__photo {
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
 }
 
 .author__name {
@@ -398,7 +248,6 @@ img {
   color: var(--color-primary);
 }
 
-/* tablet and up */
 @media (min-width: 600px) {
   .site-header__inner {
     flex-direction: row;
@@ -411,33 +260,10 @@ img {
   }
 
   .repo-stats__grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
-
-  .notations {
-    flex-direction: row;
-  }
-
-  .notations__main {
-    flex: 2 1 400px;
-  }
-
-  .notations__aside {
-    flex: 1 1 240px;
-  }
-
-  .author {
-    flex-direction: row;
-    align-items: center;
-    flex-wrap: wrap;
-  }
-
-  .author__title {
-    flex-basis: 100%;
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 
-/* desktop and up */
 @media (min-width: 1024px) {
   .site-header__inner,
   .page {
@@ -445,35 +271,21 @@ img {
     padding-right: calc(var(--spacing-unit) * 3);
   }
 
-  .hero {
-    flex-direction: row;
-    align-items: center;
-    padding: calc(var(--spacing-unit) * 6) 0;
-  }
-
-  .hero__text {
-    flex: 1 1 320px;
-  }
-
   .hero__title {
     font-size: 2.4rem;
-  }
-
-  .hero__subtitle {
-    max-width: 480px;
-  }
-
-  .hero__image {
-    flex: 1 1 280px;
-    max-width: 320px;
   }
 
   .features__grid {
     grid-template-columns: repeat(4, 1fr);
   }
 
+  .repo-stats__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
   .features__title,
   .notations__title,
+  .repo-stats__title,
   .about__title {
     font-size: 1.6rem;
   }
