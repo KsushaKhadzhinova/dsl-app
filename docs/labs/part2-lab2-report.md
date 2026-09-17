@@ -47,8 +47,9 @@
 публикуется в репозитории (файл *.env* добавлен в *.gitignore*, вместо него в репозитории
 лежит *.env*.*example* с шаблоном без реальных значений).
 
-(Рисунок 2.1 — структура базы данных в дашборде *Neon* — свой скриншот,
-`REPORT_screenshots_lab2/01_db_structure.png`.)
+[neon1]
+
+Рисунок 2.1 – Структура базы данных в дашборде *Neon*
 
 Конфигурация *Sequelize* описывает три окружения — *development*, *test* и *production*: для
 *development*/*production* используется реальный *PostgreSQL* через *DATABASE_URL*, а для
@@ -58,8 +59,11 @@
 необязательное текстовое поле по умолчанию с пустой строкой, *status* — строку по умолчанию
 "*draft*"; помимо этого *Sequelize* автоматически добавляет *id*, *createdAt* и *updatedAt*.
 
-(Рисунок 2.2 — конфигурация *Sequelize*, `REPORT_screenshots_lab2/02_sequelize_config.png`
-и `02b_sequelize_model.png`.)
+[config1]
+
+[config2]
+
+Рисунок 2.2 – Конфигурация *Sequelize* (*config*/*config*.*js* и модель *Diagram*.*js*)
 
 Такое разделение окружений даёт реальную, а не декларативную гарантию изоляции: автотесты
 (`tests/db.test.js`, `tests/diagrams.test.js`) проходят против временной *SQLite*-базы в памяти
@@ -73,16 +77,18 @@
 была снята дважды: сначала после отката второй миграции командой *npx sequelize-cli
 db:migrate:undo* — колонки *status* в этот момент нет.
 
-(Рисунок 2.3, а — таблица *Diagrams* до применения миграции *add-status-to-diagrams* (колонки
-*id*, *title*, *notation*, *dslContent*, *createdAt*, *updatedAt*), `REPORT_screenshots_lab2/03a_before.png`.)
+[neon2]
+
+Рисунок 2.3, а – Таблица *Diagrams* до применения миграции *add-status-to-diagrams*
 
 После повторного выполнения *npm run migrate* миграция *add-status-to-diagrams* применяет
 *queryInterface*.*addColumn*, и в той же таблице на реальной облачной базе *Neon* появляется
 колонка *status* типа *VARCHAR*(255) со значением по умолчанию "*draft*", не затрагивая уже
 существующие записи.
 
-(Рисунок 2.3, б — та же таблица *Diagrams* после применения миграции, с колонкой *status*,
-`REPORT_screenshots_lab2/03b_after.png`.)
+[neon3]
+
+Рисунок 2.3, б – Та же таблица *Diagrams* после применения миграции, с колонкой *status*
 
 Такой подход — типизированный вызов *queryInterface*.*addColumn* внутри версионируемого файла
 миграции, а не ручной *ALTER TABLE* через консоль — гарантирует, что и локальная копия базы, и
@@ -104,32 +110,41 @@ db:migrate:undo* — колонки *status* в этот момент нет.
 это нагляднее подтверждает, что *findAll*() читает именно постоянное хранилище, а не временный
 массив из лабораторной работы №1.
 
-(Рисунок 2.4 — запрос *GET* /*diagrams* в *Postman*, `REPORT_screenshots_lab2/04_get_all.png`.)
+[postman1]
+
+Рисунок 2.4 – Запрос *GET* /*diagrams* в *Postman*
 
 Запрос *POST* /*diagrams* с корректным телом (*title*: "Тестовая диаграмма", *notation*:
 "*erd*.*crows_foot*.*logical*") создаёт новую запись (в проверке — под *id* 175) и возвращает её
 вместе с кодом 201, включая автоматически проставленные *id*, *status* = "*draft*" и метки времени.
 
-(Рисунок 2.5 — запрос *POST* /*diagrams* в *Postman*, `REPORT_screenshots_lab2/05_post_create.png`.)
+[postman2]
+
+Рисунок 2.5 – Запрос *POST* /*diagrams* в *Postman*
 
 Запрос *PUT* /*diagrams*/175 с телом { "*status*": "*validated*" } обновляет ту же запись и
 возвращает её актуальное состояние с кодом 200 — значение *updatedAt* при этом меняется на более
 позднее, а *createdAt* остаётся прежним.
 
-(Рисунок 2.6 — запрос *PUT* /*diagrams*/:*id* в *Postman*, `REPORT_screenshots_lab2/06_put_update.png`.)
+[postman3]
+
+Рисунок 2.6 – Запрос *PUT* /*diagrams*/:*id* в *Postman*
 
 Запрос *DELETE* /*diagrams*/175 удаляет ту же запись и возвращает код 204 без тела ответа;
 повторный такой же запрос к уже удалённому *id* возвращает 404 с телом { "*error*": "Диаграмма не
 найдена" }, что подтверждает корректную проверку *deletedCount* в контроллере.
 
-(Рисунок 2.7 — запрос *DELETE* /*diagrams*/:*id* в *Postman*, `REPORT_screenshots_lab2/07_delete.png`.)
+[postman4]
+
+Рисунок 2.7 – Запрос *DELETE* /*diagrams*/:*id* в *Postman*
 
 Отдельно проверена намеренная ошибка валидации: запрос *POST* /*diagrams* с пустым *title*
 отклоняется до записи в базу и возвращает код 400 с текстом ошибки из *Sequelize*
 *ValidationError*, а не 500 или «тихое» создание некорректной записи.
 
-(Рисунок 2.8 — ответ на ошибку валидации (пустой *title*) в *Postman*,
-`REPORT_screenshots_lab2/08_validation_error.png`.)
+[postman5]
+
+Рисунок 2.8 – Ответ на ошибку валидации (пустой *title*) в *Postman*
 
 Совпадение кодов ответа с ожидаемыми для всех пяти маршрутов, включая оба граничных случая
 (удаление уже удалённой записи и создание с пустым обязательным полем), подтверждает, что
