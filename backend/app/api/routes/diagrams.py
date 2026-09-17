@@ -1,11 +1,14 @@
 import uuid
-from typing import Annotated
+from typing import Annotated, Literal
 from urllib.parse import quote
 
 from fastapi import APIRouter, Depends, HTTPException, status
 from fastapi.responses import PlainTextResponse
 
 from app.api.deps import CurrentUser, get_diagram_repository, get_user_repository
+from app.dsl.errors import DslSyntaxError
+from app.dsl.parser import parse
+from app.export import UnsupportedExportError, export_model
 from app.integrations.storage.local_provider import LocalDownloadProvider
 from app.repositories.diagram_repository import DiagramRepository
 from app.repositories.user_repository import UserRepository
@@ -24,6 +27,8 @@ from app.schemas.diagram import (
 from app.services.diagram_service import DiagramService
 
 router = APIRouter(prefix="/api/v1/diagrams", tags=["diagrams"])
+
+ExportFormat = Literal["plantuml", "mermaid", "bpmn_xml", "drawio_xml"]
 
 
 def _service(diagrams: Annotated[DiagramRepository, Depends(get_diagram_repository)]) -> DiagramService:
@@ -77,15 +82,43 @@ async def export_diagram(
     user: CurrentUser,
     diagrams: Annotated[DiagramRepository, Depends(get_diagram_repository)],
     service: Annotated[DiagramService, Depends(_service)],
+    format: ExportFormat | None = None,
 ) -> PlainTextResponse:
     diagram = _get_accessible_diagram(diagram_id, user, diagrams, service)
     content = service.get_current_content(diagram=diagram) or ""
-    provider = LocalDownloadProvider()
-    filename = await provider.save(path=f"{diagram.title}.dsl", content=content, token=None)
-    disposition = f"attachment; filename=\"diagram.dsl\"; filename*=UTF-8''{quote(filename)}"
+
+    if format is None:
+        provider = LocalDownloadProvider()
+        filename = await provider.save(path=f"{diagram.title}.dsl", content=content, token=None)
+        disposition = f"attachment; filename=\"diagram.dsl\"; filename*=UTF-8''{quote(filename)}"
+        return PlainTextResponse(
+            content,
+            media_type="text/plain",
+            headers={"Content-Disposition": disposition},
+        )
+
+    if not content:
+        raise HTTPException(
+            status.HTTP_400_BAD_REQUEST, "У диаграммы нет сохранённой версии для экспорта."
+        )
+
+    try:
+        model = parse(content)
+    except DslSyntaxError as exc:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, exc.message) from exc
+
+    try:
+        result = export_model(model, format)
+    except UnsupportedExportError as exc:
+        raise HTTPException(status.HTTP_400_BAD_REQUEST, str(exc)) from exc
+
+    disposition = (
+        f'attachment; filename="diagram.{result.file_extension}"; '
+        f"filename*=UTF-8''{quote(diagram.title)}.{result.file_extension}"
+    )
     return PlainTextResponse(
-        content,
-        media_type="text/plain",
+        result.content,
+        media_type=result.media_type,
         headers={"Content-Disposition": disposition},
     )
 
