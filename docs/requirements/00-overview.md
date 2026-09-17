@@ -1,7 +1,7 @@
 # Требования к системе DiagramCode — обзор и правила чтения
 
 **Статус:** актуально
-**Связанные документы:** [`docs/architecture/00-system-architecture.md`](../architecture/00-system-architecture.md), [`docs/architecture/01-ai-provider-setup.md`](../architecture/01-ai-provider-setup.md), [`docs/labs/00-labs-mapping.md`](../labs/00-labs-mapping.md)
+**Связанные документы:** [`docs/architecture/00-system-architecture.md`](../architecture/00-system-architecture.md), [`docs/architecture/01-ai-provider-setup.md`](../architecture/01-ai-provider-setup.md), [`docs/labs/00-labs-mapping.md`](../labs/00-labs-mapping.md), [`docs/extras/00-post-mvp-features.md`](../extras/00-post-mvp-features.md) — доп. требования вне MVP, не входят ни в одну волну ниже
 
 Этот документ и два соседних (`01-functional-requirements.md`, `02-nonfunctional-requirements.md`) фиксируют требования к DiagramCode так, как они уже вытекают из принятых архитектурных решений, макетов интерфейса (`design/mockups/*.dc.html`) и фактического кода (`backend/app/`). Здесь **не изобретаются новые решения** — документ систематизирует то, что уже согласовано, и явно помечает те немногие места, где решения ещё не принято (раздел «Открытые вопросы» ниже).
 
