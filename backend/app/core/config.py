@@ -21,6 +21,8 @@ class Settings(BaseSettings):
     github_client_id: str | None = None
     github_client_secret: str | None = None
 
+    glitchtip_dsn: str | None = None
+
 
 @lru_cache
 def get_settings() -> Settings:

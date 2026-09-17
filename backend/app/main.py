@@ -3,11 +3,13 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from app.api.routes import ai, auth, diagrams, health
 from app.core.config import get_settings
+from app.core.observability import init_error_tracking
 from app.notations import load_all as load_all_notations
 
 
 def create_app() -> FastAPI:
     settings = get_settings()
+    init_error_tracking(settings)
     load_all_notations()
 
     app = FastAPI(title=settings.app_name)
