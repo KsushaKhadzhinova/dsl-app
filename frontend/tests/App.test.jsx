@@ -1,19 +1,49 @@
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen } from '@testing-library/react';
+import { MemoryRouter } from 'react-router-dom';
 import App from '../src/App.jsx';
+import * as diagramsApi from '../src/api/diagramsApi.js';
 
-test('renders the full page composed from mock data without crashing', () => {
-  render(<App />);
-  expect(screen.getByRole('heading', { level: 1 })).toBeInTheDocument();
-  expect(screen.getByRole('contentinfo')).toBeInTheDocument();
-  expect(screen.getByRole('link', { name: 'Возможности' })).toBeInTheDocument();
+jest.mock('../src/api/diagramsApi.js');
+
+beforeEach(() => {
+  window.localStorage.clear();
+  diagramsApi.listDiagrams.mockResolvedValue([]);
 });
 
-test('wires the stub onLearnMore handler through to FeatureList', () => {
-  const logSpy = jest.spyOn(console, 'log').mockImplementation(() => {});
-  render(<App />);
+test('redirects an unauthenticated visitor from / to /login', () => {
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <App />
+    </MemoryRouter>,
+  );
+  expect(screen.getByText('DiagramCode')).toBeInTheDocument();
+  expect(screen.getByLabelText('Email')).toBeInTheDocument();
+});
 
-  fireEvent.click(screen.getAllByRole('button', { name: 'Подробнее' })[0]);
+test('renders the IDE at / for an authenticated visitor', async () => {
+  window.localStorage.setItem('diagramcode.token', 'test-token');
+  render(
+    <MemoryRouter initialEntries={['/']}>
+      <App />
+    </MemoryRouter>,
+  );
+  expect(await screen.findByTestId('mock-monaco-editor')).toBeInTheDocument();
+});
 
-  expect(logSpy).toHaveBeenCalledWith('Подробнее о возможности:', expect.any(String));
-  logSpy.mockRestore();
+test('renders the register page at /register', () => {
+  render(
+    <MemoryRouter initialEntries={['/register']}>
+      <App />
+    </MemoryRouter>,
+  );
+  expect(screen.getByLabelText('Имя пользователя')).toBeInTheDocument();
+});
+
+test('redirects unknown routes to /', () => {
+  render(
+    <MemoryRouter initialEntries={['/unknown-route']}>
+      <App />
+    </MemoryRouter>,
+  );
+  expect(screen.getByLabelText('Email')).toBeInTheDocument();
 });
