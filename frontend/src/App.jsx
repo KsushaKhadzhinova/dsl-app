@@ -1,32 +1,33 @@
-import Header from './components/layout/Header.jsx';
-import Hero from './components/features/Hero.jsx';
-import FeatureList from './components/features/FeatureList.jsx';
-import NotationsList from './components/features/NotationsList.jsx';
-import RepoStatsCard from './components/features/RepoStatsCard.jsx';
-import AboutSection from './components/features/AboutSection.jsx';
-import Footer from './components/layout/Footer.jsx';
-import { navItems, hero, features, notations, repoStats, organization, author, footer } from './data/mockData.js';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { AuthProvider } from './auth/AuthContext.jsx';
+import { ProtectedRoute } from './auth/ProtectedRoute.jsx';
+import { ThemeProvider } from './theme/ThemeContext.jsx';
+import { LocaleProvider } from './i18n/LocaleContext.jsx';
+import { LoginPage } from './pages/LoginPage.jsx';
+import { RegisterPage } from './pages/RegisterPage.jsx';
+import { IdePage } from './pages/IdePage.jsx';
 
 function App() {
-  const handleLearnMore = (feature) => {
-    console.log('Подробнее о возможности:', feature);
-  };
-
   return (
-    <>
-      <a className="skip-link" href="#main-content">
-        Перейти к основному содержимому
-      </a>
-      <Header navItems={navItems} />
-      <main id="main-content" className="page">
-        <Hero title={hero.title} subtitle={hero.subtitle} />
-        <FeatureList features={features} onLearnMore={handleLearnMore} />
-        <NotationsList notations={notations} />
-        <RepoStatsCard {...repoStats} />
-        <AboutSection organization={organization} author={author} />
-      </main>
-      <Footer year={footer.year} repoUrl={footer.repoUrl} />
-    </>
+    <AuthProvider>
+      <ThemeProvider>
+        <LocaleProvider>
+          <Routes>
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+            <Route
+              path="/"
+              element={
+                <ProtectedRoute>
+                  <IdePage />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </LocaleProvider>
+      </ThemeProvider>
+    </AuthProvider>
   );
 }
 
