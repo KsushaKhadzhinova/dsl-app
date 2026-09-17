@@ -128,7 +128,10 @@ class NotationProfile(Protocol):
 Каждая нотация — отдельный модуль в `notations/`, регистрирующий себя в общем реестре при старте приложения. Добавление новой нотации = новый файл + регистрация, **без изменения** ядра парсера, API или фронтенда (только в дропдауне появляется новый пункт из реестра). Это прямая реализация Open/Closed Principle и то, что реально снимает риск «все типы диаграмм» — это делает архитектуру бесконечно расширяемой *с первого дня*, при этом сами плагины дописываются волнами:
 
 **Волна 1 (курсовой срез, все 3 обязательных модуля РПЗ закрываются здесь):**
-`erd.crows_foot.logical`, `uml.class`, `idef0.context+decomposition`
+`erd.crows_foot.logical`, `uml.class`, `idef0.context_decomposition` (реализовано —
+регистрируется как `idef0.context_decomposition`, а не `idef0.context+decomposition`:
+токен `NOTATION` в `grammar.lark` — это `IDENTIFIER("."IDENTIFIER)*`, символ `+`
+в него не входит, а трогать грамматику ради этого не стали — см. `backend/app/notations/idef0.py`)
 
 **Волна 2:** `uml.use_case`, `uml.sequence`, `uml.activity`, `uml.state_machine`, `idef3.pfdd`, `dfd`
 

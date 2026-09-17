@@ -26,7 +26,7 @@
 |---|---|---|
 | FR-NOT-01 (реестр плагинов) | ✅ | `backend/app/notations/__init__.py` |
 | FR-NOT-02, 03, 04 (ERD Crow's Foot) | ✅ | `backend/app/notations/erd.py`, `backend/tests/test_erd_notation.py` |
-| FR-NOT-06 (UML class + IDEF0) | ⚠️ | Помечено «Волна 1 / уже должно быть в курсовом срезе», но в `notations/` зарегистрированы только `erd` и `bpmn` — **UML class и IDEF0 не реализованы**. Это прямой пробел относительно текущего FR-статуса. |
+| FR-NOT-06 (UML class + IDEF0) | ✅ | Пробел закрыт: `backend/app/notations/uml_class.py` (`uml.class`) и `backend/app/notations/idef0.py` (`idef0.context_decomposition`) зарегистрированы в `notations/__init__.py::load_all()`, покрыты `backend/tests/test_uml_class_notation.py` и `backend/tests/test_idef0_notation.py`. |
 | FR-NOT-05, 07, 08, 10, 11, 12 | ⬜ | Волны 2–4, ожидаемо не реализовано |
 | FR-NOT-09 (BPMN) | 🔶 | `backend/app/notations/bpmn.py` + `test_bpmn_notation.py` уже существуют (фоновый агент реализовал раньше волны 4 — см. риск R-07 в реестре рисков) |
 | FR-NOT-13, 14 (Problems-панель) | 🔶 | Backend отдаёт issues; UI-вкладка Problems — в работе у фронтенд-агента |
@@ -97,4 +97,4 @@
 
 ## Итоговое наблюдение
 
-Самый содержательный пробел — **FR-NOT-06** помечен как «Волна 1 / уже должно быть готово для курсового среза», но по факту в `backend/app/notations/` зарегистрированы только `erd` и `bpmn`. Это значит, что курсовой срез (см. `00-overview.md` §1) на сегодня **не закрыт полностью** — не хватает `uml.class` и `idef0.context+decomposition`. Это не блокер (BPMN уже даёт больше, чем требовалось), но именно эти два профиля стоит явно доделать перед защитой, а не откладывать как «Волна 2+».
+~~Самый содержательный пробел — **FR-NOT-06** помечен как «Волна 1 / уже должно быть готово для курсового среза», но по факту в `backend/app/notations/` зарегистрированы только `erd` и `bpmn`.~~ **Закрыто:** в `backend/app/notations/` теперь зарегистрированы `erd`, `bpmn`, `uml_class` (`uml.class`) и `idef0` (`idef0.context_decomposition`) — курсовой срез (см. `00-overview.md` §1) по составу нотаций Волны 1 закрыт полностью, тесты (`test_uml_class_notation.py`, `test_idef0_notation.py`) зелёные вместе с остальными 66 (итого 85). Оговорка, которую стоит держать в уме перед защитой: ICOM-полнота IDEF0 (FR-NOT-11) реализована как локальная эвристика (хотя бы одна ICOM-связь у блока + обязательная связь Control по методологии FIPS PUB 183), а не как полная сверка с родительской диаграммой через `parent_diagram_id`/`decomposed_node_id` — та сверка требует доступа к БД и осталась вне охвата этого прохода (см. докстринг `idef0.py`).
