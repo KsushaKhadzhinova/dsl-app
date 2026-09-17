@@ -23,4 +23,4 @@ def list_all() -> list[NotationProfile]:
 
 
 def load_all() -> None:
-    from app.notations import bpmn, erd  # noqa: F401
+    from app.notations import bpmn, erd, uml_class  # noqa: F401
