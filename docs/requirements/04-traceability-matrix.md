@@ -11,7 +11,7 @@
 
 | FR | Статус | Комментарий |
 |---|---|---|
-| FR-DSL-01 (подсветка в Monaco) | 🔶 | Ожидает результата фонового агента `feature/real-ide-app` (Monarch-токенайзер по `grammar.lark`) |
+| FR-DSL-01 (подсветка в Monaco) | ✅ | `frontend/src/dsl/language.js` — рабочий Monarch-токенайзер (ключевые слова/типы/строки/операторы/числа) + определения тем, подтверждено чтением кода |
 | FR-DSL-02, 03, 04 (грамматика, разбор) | ✅ | `backend/app/dsl/parser.py`, `grammar.lark`, покрыто `backend/tests/test_parser.py` |
 | FR-DSL-05 (позиция ошибки) | ✅ | `backend/app/dsl/errors.py::DslSyntaxError` |
 | FR-DSL-06 (кнопка Run) | 🔶 | Backend-эндпоинт есть (`diagrams.py::render_dsl`), UI — в работе у фронтенд-агента |
@@ -92,7 +92,7 @@
 |---|---|---|
 | FR-AUTH-01, 02, 03, 05, 06 | ✅ | `backend/app/services/auth_service.py`, `core/security.py`, `api/deps.py` |
 | FR-AUTH-04, FR-UI-10 (OAuth) | ⬜ | Волна 2, не начато |
-| FR-AUTH-07 (тема в профиле) | ⚠️ | Не подтверждено поле `theme_preference` в `models/user.py` — проверить при следующем чтении модели |
+| FR-AUTH-07 (тема в профиле) | ✅ | `backend/app/models/user.py::User.theme_preference` (`String(10)`, default `"dark"`), подтверждено чтением кода |
 | FR-AUTH-08 (соавторство) | 🔶 | `backend/app/models/collaborator.py` + `test_collaboration.py` созданы фоновым агентом; UI совместного редактирования не входит в текущий проход фронтенда |
 
 ## Итоговое наблюдение
