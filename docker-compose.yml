@@ -29,18 +29,5 @@ services:
     volumes:
       - ./backend:/app
 
-  worker:
-    build: ./backend
-    env_file: ./backend/.env
-    environment:
-      DATABASE_URL: postgresql+psycopg2://diagramcode:diagramcode@postgres:5432/diagramcode
-      REDIS_URL: redis://redis:6379/0
-    command: ["rq", "worker", "-u", "redis://redis:6379/0"]
-    depends_on:
-      - postgres
-      - redis
-    volumes:
-      - ./backend:/app
-
 volumes:
   postgres_data:

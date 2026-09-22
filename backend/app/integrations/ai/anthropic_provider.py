@@ -6,13 +6,14 @@ import anthropic
 from app.integrations.ai._prompts import SYSTEM_PROMPT, build_fix_message, build_generate_message
 
 DEFAULT_MODEL = "claude-3-5-haiku-20241022"
+REQUEST_TIMEOUT_SECONDS = 30.0
 
 
 class AnthropicAIProvider:
     key = "anthropic"
 
     def __init__(self, api_key: str, model: str = DEFAULT_MODEL) -> None:
-        self._client = anthropic.AsyncAnthropic(api_key=api_key)
+        self._client = anthropic.AsyncAnthropic(api_key=api_key, timeout=REQUEST_TIMEOUT_SECONDS)
         self._model = model
 
     async def generate_dsl_from_text(self, *, prompt: str, notation: str) -> str:
