@@ -1,0 +1,58 @@
+:root {
+  color-scheme: light dark;
+  font: 16px/1.5 system-ui, 'Segoe UI', Roboto, sans-serif;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+}
+
+#root {
+  max-width: 960px;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+
+.app-nav {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #444;
+}
+
+.app-nav a {
+  text-decoration: none;
+}
+
+.error-message {
+  color: #d33;
+}
+
+.loading-message {
+  color: #888;
+}
+
+.diagram-list {
+  list-style: none;
+  padding: 0;
+}
+
+.diagram-list li {
+  padding: 0.5rem 0;
+  border-bottom: 1px solid #333;
+}
+
+form.diagram-form {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  max-width: 480px;
+}
+
+form.diagram-form label {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
