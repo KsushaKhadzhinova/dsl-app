@@ -28,6 +28,9 @@
     "supertest": "^7.0.0"
   },
   "jest": {
+    "testMatch": [
+      "<rootDir>/tests/**/*.test.js"
+    ],
     "coverageThreshold": {
       "global": {
         "branches": 100,
