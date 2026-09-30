@@ -8,27 +8,45 @@ const User = sequelize.define(
       type: DataTypes.STRING,
       allowNull: false,
       unique: true,
-      validate: { isEmail: true, notEmpty: true },
+      validate: {
+        isEmail: true,
+        notEmpty: true,
+      },
       set(value) {
         this.setDataValue("email", String(value).toLowerCase());
       },
     },
+
     passwordHash: {
       type: DataTypes.STRING,
       allowNull: false,
     },
+
     isActive: {
       type: DataTypes.BOOLEAN,
       allowNull: false,
       defaultValue: true,
     },
+
     loginAttempts: {
       type: DataTypes.INTEGER,
       allowNull: false,
       defaultValue: 0,
     },
+
+    refreshTokenHash: {
+      type: DataTypes.STRING,
+      allowNull: true,
+    },
+
+    refreshTokenExpiresAt: {
+      type: DataTypes.DATE,
+      allowNull: true,
+    },
   },
-  { tableName: "Users" },
+  {
+    tableName: "Users",
+  }
 );
 
 module.exports = User;
